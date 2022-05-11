@@ -1,0 +1,93 @@
+﻿@model OrderListViewModel
+
+
+    <section class="order-area">
+        <div class="container">
+           
+            <div class="rows">
+                <!-- Order Item Start -->
+                <div class="cart-items">
+                    <div class="header">
+                        <div class="image">
+                            Image
+                        </div>
+                        <div class="name">
+                            Name
+                        </div>
+                        <div class="price">
+                            Prices
+                        </div>
+                       
+                        <div class="info">
+                            Info
+                        </div>
+                    </div>
+                    <div class="body">
+                        @foreach (var item in Model.OrderListVM)
+                        {
+                        <div class="item">
+                            @foreach (var orderitem in item.OrderItemListVM)
+
+                            {
+                                <div class="image">
+                                    <img src="~/img/@orderitem.Product.ImageUrl">
+                                </div>
+                                <div class="name">
+                                    <div class="name-text">
+                                        <p>@orderitem.Product.Name</p>
+                                    </div>
+                                  
+                                </div>
+                                <div class="price">
+                                    <span>@orderitem.Product.Price</span> 
+                                </div>
+                            }
+
+
+
+                            <div class="info status">
+                                <div class="status-timer">
+                                    <h6>
+                                       @item.OrderStatus
+                                    </h6>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+
+                    </div>
+                </div>
+                <!-- Order Item End -->
+            </div>
+        </div>
+    </section>
+
+@*<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var item in Model.OrderListVM)
+            {
+            <div>
+
+
+                @foreach (var orderitem in item.OrderItemListVM)
+
+                {
+                    <div>
+                        <img src="~/img/@orderitem.Product.ImageUrl" alt="Alternate Text" />
+                        <p>@orderitem.Product.Name</p>
+                        <p>@orderitem.Product.Price</p>
+
+                    </div>
+                }
+
+                <p>@item.OrderStatus</p>
+            </div>
+
+            }
+
+        </div>
+    </div>
+</div>*@

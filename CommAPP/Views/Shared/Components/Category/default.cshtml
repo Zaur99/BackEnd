@@ -1,0 +1,54 @@
+﻿@model CommAPP.Models.ViewModels.CategoryListViewModel
+
+<li>
+    <a href="javascript:void(0)">
+        Category
+        <svg xmlns="http://www.w3.org/2000/svg" width="9.98" height="5.69"
+             viewBox="0 0 9.98 5.69">
+            <g id="Arrow" transform="translate(0.99 0.99)">
+                <path id="Arrow-2" data-name="Arrow" d="M1474.286,26.4l4,4,4-4"
+                      transform="translate(-1474.286 -26.4)" fill="none" stroke="#1a2224"
+                      stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" />
+            </g>
+        </svg>
+    </a>
+    <ul class="sub-menu">
+        @foreach (var item in Model.Categories)
+        {
+            @if (item.ParentId == null)
+            { 
+                <li><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@item.Url">@item.Name</a></li>
+            }
+        }
+       
+    </ul>
+</li>
+
+@*<ul class="list-group">
+    @foreach (var item in Model.Categories)
+    {
+        @if (item.ParentId == null)
+        {
+            <li class="list-group-item  @(Model.SelectedCategory== item.Url ? "active" : "")">
+                <a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@item.Url">@item.Name</a>
+                @if (item.Children != null)
+                {
+                    <ul>
+                        @foreach (var sub in item.Children)
+                        {
+                            <li><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@sub.Url">@sub.Name</a></li>
+                        }
+
+                    </ul>
+
+                }
+
+            </li>
+        }
+
+
+    }
+
+
+</ul>*@
+

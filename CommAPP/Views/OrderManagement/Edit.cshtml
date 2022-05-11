@@ -1,0 +1,75 @@
+﻿@model OrderFullViewModel
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+          
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="a" value="@Model.FullName" disabled>
+                </div>
+                <div class="form-group">
+                    <input value="@Model.City" type="text" class="form-control" id="b" disabled>
+
+                </div>
+                <div class="form-group">
+                    <input value="@Model.Adress" type="text" class="form-control" id="b" disabled>
+
+                </div>
+
+
+                <div class="form-group">
+                    <input value="@Model.PhoneNumber" type="text" class="form-control" id="b" disabled>
+
+                </div>
+                <div class="form-group">
+                    <input value="@Model.Email" type="email" class="form-control" id="b" disabled>
+
+                </div>
+
+                <div class="form-group">
+                    <textarea value="@Model.ExtraDetails" type="text" class="form-control" id="b" disabled></textarea>
+
+                </div>
+
+
+
+
+
+
+
+            
+        </div>
+
+        <div class="col-md-4">
+            <div>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <div class="cart-item d-flex">
+                        <img width="100" src="~/img/@item.Product.ImageUrl" />
+                        <div>
+                            <p>@item.Product.Name</p>
+                            <p>Price - @item.Product.Price</p>
+                            <p>Quantity - @item.Quantity</p>
+                        </div>
+                    </div>
+
+                }
+            <div class="total-price">@Model.TotalPrice</div>
+            <form asp-controller="OrderManagement" asp-action="Edit" method="post">
+                <select class="form-select" asp-for="@Model.OrderStatus">
+                    <option value="Pending" selected>Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
+                <input type="hidden"  asp-for="@Model.Id"  />
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+              
+            </div>
+        </div>
+    </div>
+
+</div>

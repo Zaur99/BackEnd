@@ -1,0 +1,33 @@
+﻿@model OrderListViewModel
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.OrderListVM)
+                    {
+                        <tr>
+                            <th scope="row">@item.OrderId</th>
+                            <td>@item.OrderStatus</td>
+                            <td>@item.OrderedTime</td>
+                            <td>
+                                <a asp-controller="OrderManagement" asp-action="Edit" asp-route-orderId="@item.OrderId" class="btn btn-warning">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>

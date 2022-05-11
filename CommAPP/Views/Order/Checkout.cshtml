@@ -1,0 +1,81 @@
+﻿@model OrderModel
+
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-controller="Order" asp-action="CompleteOrder" method="post">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <input asp-for="@Model.FullName" type="text" class="form-control" id="a" placeholder="Full Name">
+                    <span class="text-danger" asp-validation-for="FullName"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.City" type="text" class="form-control" id="b" placeholder="City">
+                    <span class="text-danger" asp-validation-for="City"></span>
+
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Adress" type="text" class="form-control" id="b" placeholder="Address">
+                    <span class="text-danger" asp-validation-for="Adress"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <textarea asp-for="@Model.ExtraDetails" type="text" class="form-control" id="b" placeholder="Extra Details"></textarea>
+
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.PhoneNumber" type="text" class="form-control" id="b" placeholder="Phone No">
+                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Email" type="email" class="form-control" id="b" placeholder="Email">
+                    <span class="text-danger" asp-validation-for="Email"></span>
+
+                </div>
+
+                @{ 
+                    var cartItems = ((CartModel)ViewData["Cart"]).CartItems;
+                }
+                @for (int i = 0; i < cartItems.Count(); i++)
+                {
+                    <input asp-for="@cartItems[i].ImageUrl" type="hidden" />
+                    <input asp-for="@cartItems[i].Name" type="hidden" />
+                    <input asp-for="@cartItems[i].ProductId" type="hidden" />
+                    <input asp-for="@cartItems[i].Price" type="hidden" />
+                    <input asp-for="@cartItems[i].Quantity" type="hidden" />
+                   
+                }
+
+
+
+
+
+                <button type="submit" class="btn btn-primary">Complete Order</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            @foreach (var item in ((CartModel)ViewData["Cart"]).CartItems)
+            {
+                <div class="cart-item d-flex">
+                    <img width="100" src="~/img/@item.ImageUrl" />
+                    <div>
+                        <p>@item.Name</p>
+                        <p>Price - @item.Price.ToString("G29")</p>
+                        <p>Quantity - @item.Quantity</p>
+                    </div>
+                </div>
+                <hr />  
+            }
+
+        <div>@(((CartModel)ViewData["Cart"]).TotalPrice.ToString("G29"))<span>&#8380;</span></div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}    

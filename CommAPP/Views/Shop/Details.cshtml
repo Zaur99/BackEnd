@@ -1,0 +1,178 @@
+﻿@model CommAPP.Models.ViewModels.ProductDetailsViewModel
+
+
+
+<div class="container">
+
+    <div class="row">
+
+
+
+        <div class="col-md-5">
+            <div>
+                <img src="/img/@Model.Product.ImageUrl" alt="" />
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div>
+                <div>
+                    <h4 class="pro-d-title mb-3">
+                        <a asp-controller="Shop" asp-action="Details" asp-route-productname="@Model.Product.Url" class="mb-3">
+                            @Model.Product.Name
+                        </a>
+                    </h4>
+                    <p class="mb-3">
+                        @Model.Product.Description
+                    </p>
+                    <div class="product_meta mb-3">
+                        @foreach (var item in Model.Categories)
+                        {
+                            <span><a href="#">@item.Name</a></span>
+
+
+                        }
+
+                    </div>
+                    <div class="m-bot15 mb-3"> <strong>Price : </strong> <span class="amount-old">@Model.Product.Price</span>  </div>
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <button class="btn btn-primary addToCart" type="submit">Add To Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (ViewBag.HasComment == false)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <form asp-controller="Shop" asp-action="SendComment" method="post">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Comment</label>
+                            <textarea asp-for="@Model.CommentVM.Text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.CommentVM.Text"></span>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <div onmouseout="OnSelected()" class="d-flex">
+                                <i onmouseover="OnMouseOver(1)" onmouseout="OnMouseOut(1)" onclick="OnClick(1)" class="fas fa-star fa-fw single-star" style="color: var(--fa-navy);"></i>
+                                <i onmouseover="OnMouseOver(2)" onmouseout="OnMouseOut(2)" onclick="OnClick(2)" class="fas fa-star fa-fw single-star" style="color: var(--fa-navy);"></i>
+                                <i onmouseover="OnMouseOver(3)" onmouseout="OnMouseOut(3)" onclick="OnClick(3)" class="fas fa-star fa-fw single-star" style="color: var(--fa-navy);"></i>
+                                <i onmouseover="OnMouseOver(4)" onmouseout="OnMouseOut(4)" onclick="OnClick(4)" class="fas fa-star fa-fw single-star" style="color: var(--fa-navy);"></i>
+                                <i onmouseover="OnMouseOver(5)" onmouseout="OnMouseOut(5)" onclick="OnClick(5)" class="fas fa-star fa-fw single-star" style="color: var(--fa-navy);"></i>
+                            </div>
+                            <div>
+                                <input asp-for="@Model.CommentVM.Star" type="hidden" id="selectedStar" />
+                                <input asp-for="@Model.Product.Id" type="hidden" value="@Model.Product.Id" />
+                                <input asp-for="@Model.Product.Url" type="hidden" />
+                                <input name="userName" value="@User.Identity.Name" type="hidden" />
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        }
+
+    }
+
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div>
+                @if (Model.CommentListVM != null)
+                {
+
+                    @foreach (var item in Model.CommentListVM)
+                    {
+                        <p>@item.UserName</p>
+                        <div class="d-flex">
+                            @for (int i = 0; i < item.Star; i++)
+                            {
+                                <i class="fas fa-star fa-fw " style="color: yellow;"></i>
+                            }
+                            @for (int i = item.Star + 1; i <= 5; i++)
+                            {
+                                <i class="fas fa-star fa-fw " style="color: var(--fa-navy);"></i>
+
+                            }
+                        </div>
+                        <p>@item.Text</p>
+
+                    }
+
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+
+
+
+        function OnMouseOver(number) {
+
+            var stars = document.getElementsByClassName("single-star");
+
+            for (var i = 0; i < number; i++) {
+                stars[i].style.color = "yellow";
+            }
+        }
+
+        function OnMouseOut(number) {
+
+            var stars = document.getElementsByClassName("single-star");
+
+            for (var i = 0; i < number; i++) {
+                stars[i].style.color = "var(--fa-navy)";
+            }
+
+        }
+
+        function OnClick(number) {
+
+            var stars = document.getElementsByClassName("single-star");
+            document.getElementById("selectedStar").value = number;
+            //console.log(document.getElementById("selectedStar").value);
+
+            for (var i = 0; i < number; i++) {
+                stars[i].style.color = "yellow";
+            }
+
+            for (var i = number; i <= 5; i++) {
+                stars[i].style.color = "var(--fa-navy)";
+
+            }
+
+
+
+        }
+
+        function OnSelected() {
+            var star = document.getElementById("selectedStar").value;
+            var stars = document.getElementsByClassName("single-star");
+
+            for (var i = 0; i < star; i++) {
+                stars[i].style.color = "yellow";
+            }
+        }
+    </script>
+}

@@ -1,0 +1,37 @@
+﻿@model  CommAPP.Models.ViewModels.ProfileDetailsModel
+
+
+<div class="row">
+    <div class="col-md-3">
+
+        <form method="post" action="/Account/ProfileEdit">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group">
+                <label for="a">First Name</label>
+                <input type="text" class="form-control"  asp-for="@Model.FirstName">
+                <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
+            </div>
+            <div class="form-group">
+                <label for="a">Last Name</label>
+                <input type="text" class="form-control"  asp-for="@Model.LastName">
+                <span class="text-danger" asp-validation-for="@Model.LastName"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="a">User Name</label>
+                <input type="text" class="form-control" asp-for="@Model.UserName">
+                <span class="text-danger" asp-validation-for="@Model.UserName"></span>
+            </div>
+            <div class="form-group">
+                <label for="a">Email</label>
+                <input type="text" class="form-control"  asp-for="@Model.Email">
+                <span class="text-danger" asp-validation-for="@Model.Email"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Sumbit</button>
+
+            </form>
+        </div>
+ </div>

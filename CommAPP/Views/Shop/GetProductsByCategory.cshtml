@@ -1,0 +1,123 @@
+﻿
+@section Styles{
+<style>
+    .product-item-image {
+        height: 200px;
+        width: 70%;
+        display: flex;
+        align-items: center;
+    }
+
+    
+    
+                      
+</style>
+   
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+                @foreach (var item in ((CategoryListViewModel)TempData["Categories"]).Categories)
+                {
+                    @if (item.ParentId == null)
+                    {
+                       
+                        <li class="list-group-item">
+                            @item.Name
+                            @if (item.Children != null)
+                            {
+                                <ul>
+                                    @foreach (var sub in item.Children)
+                                    {
+                                        <li ><a  class="@(sub.Url == ((CategoryListViewModel)TempData["Categories"]).SelectedCategory ? "active" : "") " asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@sub.Url">@sub.Name</a></li>
+                                    }
+
+                                </ul>
+
+                            }
+
+                        </li>
+                    }
+                    else
+                    {
+                        <li>sa</li>
+                    }
+
+
+                }
+
+
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var item in Model.Products)
+                {
+                    <div class="col-md-4 col-sm-6">
+                        <div class="product-item">
+                            <div class="product-item-image">
+                                <a href="product-details.html">
+                                    <img src="~/img/@item.ImageUrl" alt="Product Name"
+                                         class="img-fluid">
+                                </a>
+                                <div class="cart-icon">
+                                    <a href="#"><i class="far fa-heart"></i></a>
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="productId" value="@item.Id" />
+                                        <button style="border:0; width:0;" type="submit">
+                                            <a>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75"
+                                                     viewBox="0 0 16.75 16.75">
+                                                    <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
+                                                        <g id="Icon" transform="translate(0 1)">
+                                                            <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714"
+                                                                     rx="0.682" ry="0.714" transform="translate(4.773 13.571)"
+                                                                     fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                                     stroke-linejoin="round" stroke-width="1.5" />
+                                                            <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714"
+                                                                     rx="0.682" ry="0.714" transform="translate(12.273 13.571)"
+                                                                     fill="none" stroke="#1a2224" stroke-linecap="round"
+                                                                     stroke-linejoin="round" stroke-width="1.5" />
+                                                            <path id="Path_3" data-name="Path 3"
+                                                                  d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409"
+                                                                  transform="translate(-1 -1)" fill="none" stroke="#1a2224"
+                                                                  stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="1.5" />
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="product-item-info">
+                                <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                <span>@item.Price</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+
+            <nav style="margin-top:200px;" aria-label="Page navigation example">
+                <ul class="pagination">
+                    @for (int i = 0; i < Model.PageDetails.ShownProducts(); i++)
+                    {
+                        <li class="page-item @(Model.PageDetails.CurrentPage == i+1 ? "active" : "")"><a class="page-link " href="/products/@Model.PageDetails.CurrentCategory?page=@(i+1)">@(i+1)</a></li>
+                    }
+
+
+                </ul>
+            </nav>
+           
+        </div>
+    </div>
+</div>

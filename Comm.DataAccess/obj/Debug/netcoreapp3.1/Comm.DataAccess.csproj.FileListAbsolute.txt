@@ -1,0 +1,48 @@
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.deps.json
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.json
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CopyComplete
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\CommAPP\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.deps.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CopyComplete
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.deps.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.csproj.CopyComplete
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\Comm.DataAccess\obj\Debug\netcoreapp3.1\Comm.DataAccess.genruntimeconfig.cache

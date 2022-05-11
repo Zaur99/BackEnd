@@ -1,0 +1,85 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles{
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/css/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="owl-carousel">
+        <div class="carousel-container"><img class="carousel-image img_1" src="~/img/Slider_Images/galaxy-s21-ultra-5g-share-image.jpg" alt="Alternate Text" /> </div>
+        <div class="carousel-container"><img class="carousel-image img_2" src="~/img/Slider_Images/iPhone-12-Pro-Max-14.jpg" alt="Alternate Text" /></div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            @await Component.InvokeAsync("Category")
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+
+                @foreach (var item in Model.Products)
+                {
+                    <div class="col-sm-6 col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <div style="height:250px;" class="d-flex align-items-center">
+                                <img width="100" class="card-img-top" src="~/img/@item.ImageUrl" alt="Card image cap">
+                            </div>
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @item.Name
+                                </h5>
+                                <p style="width:80%" class="card-text">@item.Description</p>
+                                <p>@item.Price.ToString("G29")<span>&#8380;</span></p>
+                                <a asp-controller="shop" asp-action="Details" asp-route-productname="@item.Url" class="btn btn-primary">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplaySpeed: 2000,
+            margin: 0,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 1,
+                    nav: false
+                },
+                1000: {
+                    items: 1,
+                    nav: true,
+                    loop: true
+                }
+            }
+        })
+    </script>
+}
+

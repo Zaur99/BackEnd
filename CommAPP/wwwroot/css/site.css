@@ -1,0 +1,57 @@
+﻿
+
+
+.carousel-container {
+    position: relative;
+    height: 500px;
+}
+
+.carousel-image {
+    position: absolute;
+    height: 523px;
+}
+
+@media (max-width:992px) {
+    .carousel-image {
+        height: 323px;
+    }
+
+    .carousel-container {
+        height: 360px;
+    }
+}
+/*Owl Carousel*/
+.owl-nav {
+    position: absolute;
+    top: 30%;
+    width: 100%;
+}
+
+    .owl-nav .owl-prev {
+        position: absolute;
+        left: 0;
+    }
+
+    .owl-nav .owl-next {
+        position: absolute;
+        right: 0;
+    }
+    .owl-nav button:focus{
+        outline:none;
+    }
+
+    .owl-nav button span {
+        font-size: 100px;
+        color: white;
+    }
+
+
+.content {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+
+
+
+

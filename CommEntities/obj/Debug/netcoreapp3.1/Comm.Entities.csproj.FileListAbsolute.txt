@@ -1,0 +1,38 @@
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.deps.json
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.json
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\CommAPP\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.deps.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\CommAPP - Copy (2)\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.deps.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\bin\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommEntities\obj\Debug\netcoreapp3.1\Comm.Entities.genruntimeconfig.cache

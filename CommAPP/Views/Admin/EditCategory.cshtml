@@ -1,0 +1,96 @@
+﻿@model CategoryModel
+
+
+<div class="row">
+    <div class="col-md-3">
+
+        <form method="post" action="/Admin/EditCategory">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group">
+                <label for="a">Name</label>
+                <input type="text" class="form-control" id="a" aria-describedby="emailHelp" asp-for="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label for="d">Url</label>
+                <input type="text" class="form-control" id="d" asp-for="Url">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sumbit</button>
+
+            <div id="products">
+                @for (int i = 0; i < Model.Products.Count; i++)
+                {
+                    <input type="hidden" name="Products[@i].Id" value="@Model.Products[@i].Id" />
+                    <input type="hidden" name="Products[@i].Name" value="@Model.Products[@i].Name" />
+                    <input type="hidden" name="Products[@i].Price" value="@Model.Products[@i].Price" />
+                    <input type="hidden" name="Products[@i].IsApproved" value="@Model.Products[@i].IsApproved.ToString()" />
+                }
+            </div>
+          
+        </form>
+    </div>
+    <div class="col-md-9">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                   
+                    <th>
+                        IsApproved
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var b in Model.Products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => b.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => b.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => b.Price)
+                        </td>
+                     
+
+                        <td>
+                            @Html.DisplayFor(modelItem => b.IsApproved)
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@b.Id">Edit</a>
+                            <form action="/Admin/DeleteFromCategory" method="post">
+                                <input type="hidden" name="productId" value="@b.Id" />
+                                <input type="hidden" name="categoryId" value="@Model.Id" />
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+
+@*@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}*@   
