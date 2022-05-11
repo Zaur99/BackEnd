@@ -120,7 +120,7 @@ namespace CommAPP.Controllers
                     Quantity = 1,
                     ProductId = product.Id,
                     Url = product.Url,
-                    Star = product.Comments.Average(x => Convert.ToDouble(x.Star))
+                    Star = product.Comments.Any() ? product.Comments.Average(x => Convert.ToDouble(x.Star)) : 0
                 });
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
@@ -143,7 +143,7 @@ namespace CommAPP.Controllers
                         Quantity = 1,
                         ProductId = product.Id, 
                         Url = product.Url,
-                        Star = product.Comments.Average(x => Convert.ToDouble(x.Star))
+                        Star = product.Comments.Any() ? product.Comments.Average(x => Convert.ToDouble(x.Star)) : 0
                     });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
