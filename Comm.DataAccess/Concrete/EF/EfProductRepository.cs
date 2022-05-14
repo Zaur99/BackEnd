@@ -18,11 +18,16 @@ namespace Comm.DataAccess.Concrete.EF
         {
             this.context = context;
         }
-       
+
+        public IEnumerable<Product> GetApprovedProducts()
+        {
+            throw new NotImplementedException();
+        }
+
         public Product GetByIdWithCategories(int id)
         {
 
-            return context.Products.Where(i => i.Id == id).Include(i => i.ProductCategories).ThenInclude(i => i.Category).FirstOrDefault();
+            return context.Products.Where(i => i.Id == id).FirstOrDefault();
 
         }
 
@@ -33,10 +38,7 @@ namespace Comm.DataAccess.Concrete.EF
 
             if (!string.IsNullOrEmpty(category))
             {
-                products = products
-                            .Include(i => i.ProductCategories)
-                            .ThenInclude(i => i.Category)
-                            .Where(i => i.ProductCategories.Any(a => a.Category.Url == category.ToLower()));
+                products = products.Where(i => i.ProductCategories.Any(a => a.Category.Url == category.ToLower()));
             }
 
             return products.Count();
@@ -50,15 +52,12 @@ namespace Comm.DataAccess.Concrete.EF
 
         }
 
-        public IEnumerable<Product> GetPopularProducts()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public Product GetProductDetails(string url)
         {
 
-            return (Product)context.Products.Where(i => i.Url == url.ToLower()).Include(i=>i.Comments).ThenInclude(i=>i.User).Include(i => i.ProductCategories).ThenInclude(i => i.Category).FirstOrDefault();
+            return context.Products.Where(i => i.Url == url.ToLower()).FirstOrDefault();
 
         }
 
@@ -69,10 +68,7 @@ namespace Comm.DataAccess.Concrete.EF
 
             if (!String.IsNullOrEmpty(category))
             {
-                products = products
-              .Include(i => i.ProductCategories)
-              .ThenInclude(i => i.Category)
-              .Where(i => i.ProductCategories.Any(a => a.Category.Url == category.ToLower()));
+                products = products.Where(i => i.ProductCategories.Any(a => a.Category.Url == category.ToLower()));
 
             }
 
@@ -84,9 +80,7 @@ namespace Comm.DataAccess.Concrete.EF
         public void Update(Product entity, int[] categoryIds)
         {
 
-            var product = context.Products
-                                  .Include(i => i.ProductCategories)
-                                  .FirstOrDefault(i => i.Id == entity.Id);
+            var product = context.Products.FirstOrDefault(i => i.Id == entity.Id);
 
             if (product != null)
             {

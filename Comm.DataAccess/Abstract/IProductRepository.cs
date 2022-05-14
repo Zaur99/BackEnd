@@ -13,6 +13,6 @@ namespace Comm.DataAccess.Abstract
         void Update(Product entity, int[] categoryIds);
         Product GetByIdWithCategories(int id);
         IEnumerable<Product> GetHomeProducts();
-        IEnumerable<Product> GetPopularProducts();
+        IEnumerable<Product> GetApprovedProducts();
     }
 }

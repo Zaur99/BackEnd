@@ -172,12 +172,19 @@ namespace CommAPP.Controllers
         [HttpGet]
         public IActionResult CreateCategory()
         {
+            var categories = _categoryService.GetAll();
+
+            var vm = new CategoryListViewModel()
+            {
+                Categories = categories
+            };
+
+            ViewData["Categories"] = vm;
+
             return View();
         }
 
         [HttpPost]
-        
-
         public IActionResult CreateCategory(CategoryModel model)
         {
 
@@ -186,7 +193,8 @@ namespace CommAPP.Controllers
                 var entity = new Category
                 {
                     Name = model.Name,
-                    Url = model.Url
+                    Url = model.Url,
+                     
                 };
 
                 _categoryService.Create(entity);
@@ -236,6 +244,24 @@ namespace CommAPP.Controllers
                 return RedirectToAction("AdminCategories");
             }
             return View(model);
+        }
+
+
+        [HttpPost]
+
+        public IActionResult DeleteCategory(int id)
+        {
+            var entity = _categoryService.GetById(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+
+            }
+
+            _categoryService.Delete(entity);
+
+            return RedirectToAction("AdminCategories");
         }
 
         [HttpPost]

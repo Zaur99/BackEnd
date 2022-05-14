@@ -31,6 +31,11 @@ namespace Comm.Business.Concrete
             return _productRepository.GetAll().ToList();
         }
 
+        public IEnumerable<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            return _productRepository.GetAll(filter);
+        }
+
         public Product GetById(int id)
         {
             return _productRepository.GetById(id);

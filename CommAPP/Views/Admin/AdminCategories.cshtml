@@ -30,7 +30,7 @@
 
                         <td>
                             <a class="btn btn-warning" asp-controller="Admin" asp-action="EditCategory" asp-route-id="@b.Id">Edit</a>
-                            <form action="/Admin/Delete" method="post">
+                            <form action="/Admin/DeleteCategory" method="post">
                                 <input type="hidden" name="Id" value="@b.Id" />
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
@@ -43,14 +43,4 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
-    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
-    <script>
-
-        $('#table_id').dataTable({
-
-       );
-    </script>
+   

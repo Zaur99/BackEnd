@@ -10,13 +10,13 @@ namespace CommAPP.Models.ViewModels
     public class CategoryModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="Ad boş buraxıla bilməz")]
 
-        
+        [Required(ErrorMessage ="Ad boş buraxıla bilməz")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Url boş buraxıla bilməz")]
         public string Url { get; set; }
+        public string CategoryName { get; set; }
         public List<Product> Products { get; set; }
     }
 }

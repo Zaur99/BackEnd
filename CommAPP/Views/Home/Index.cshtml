@@ -17,8 +17,24 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            @await Component.InvokeAsync("Category")
-        </div>
+
+            <ul class="list-group">
+                @foreach (var item in ((CategoryListViewModel)ViewData["Categories"]).Categories)
+                {
+                    @if (item.ParentId == null)
+                    {
+
+                        <li class="list-group-item"><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@item.Url">@item.Name</a></li>
+                    }
+
+
+
+                }
+
+
+            </ul>
+          
+          </div>
         <div class="col-md-9">
             <div class="row">
 

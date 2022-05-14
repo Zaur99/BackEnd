@@ -1,20 +1,44 @@
 ﻿@model CategoryModel
 
-    <div class="container">
-        <form method="post" action="/Admin/Create">
+<div class="container">
+    <form method="post" asp-controller="Admin" asp-action="CreateCategory">
 
-            <div class="form-group">
-                <label for="Name">Name</label>
-                <input type="text" class="form-control" asp-for="Name" aria-describedby="emailHelp" placeholder="Name">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" class="form-control" asp-for="Name" aria-describedby="emailHelp" placeholder="Name">
 
-            </div>
+        </div>
 
 
-            <div class="form-group">
-                <label for="Url">Url</label>
-                <input type="text" class="form-control" asp-for="Url" placeholder="Url">
-            </div>
+        <div class="form-group">
+            <label for="Url">Url</label>
+            <input type="text" class="form-control" asp-for="Url" placeholder="Url">
+        </div>
+        
+        <select class="form-select" asp-for="@Model.CategoryName">
+            <option selected>Choose parent category</option>
+            @foreach (var item in ((CategoryListViewModel)ViewData["Categories"]).Categories)
+            {
+                @if (item.ParentId == null)
+                {
+                    <option value="@item.Name">
+                        @item.Name
 
-            <button type="submit" class="btn btn-primary">Sumbit</button>
-        </form>
-    </div>
+                    </option>
+                }
+                else
+                {
+                    <option value="@item.Name">
+                       - @item.Name
+
+                    </option>
+
+                }
+
+            }
+
+           
+        </select>
+        <button type="submit" class="btn btn-primary">Sumbit</button>
+    </form>
+</div>

@@ -9,6 +9,7 @@ namespace CommAPP.Models.ViewModels
     public class CategoryListViewModel
     {
         public IEnumerable<Category> Categories { get; set; }
+        public Category Category { get; set; }
         public string SelectedCategory { get; set; }
         //public List<Product> Products { get; set; }
     }

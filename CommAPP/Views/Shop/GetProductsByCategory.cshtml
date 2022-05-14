@@ -1,56 +1,86 @@
 ﻿
 @section Styles{
-<style>
-    .product-item-image {
-        height: 200px;
-        width: 70%;
-        display: flex;
-        align-items: center;
-    }
+    <style>
+        .product-item-image {
+            height: 200px;
+            width: 70%;
+            display: flex;
+            align-items: center;
+        }
+    </style>
 
-    
-    
-                      
-</style>
-   
 
 }
 
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <ul class="list-group">
-                @foreach (var item in ((CategoryListViewModel)TempData["Categories"]).Categories)
+            <div id="accordion">
+                @{
+                    var categories = ((CategoryListViewModel)ViewData["Categories"]).Categories == null 
+                        ?  null
+                        : ((CategoryListViewModel)ViewData["Categories"]).Categories.ToList();
+
+                    var category = ((CategoryListViewModel)ViewData["Categories"]).Category;
+                }
+                @if (categories == null)
                 {
-                    @if (item.ParentId == null)
+                <div class="list-group">
+
+                    <a class="list-group-item list-group-item-action disabled">@category.Name</a>
+                    @if (category.Children != null)
                     {
-                       
-                        <li class="list-group-item">
-                            @item.Name
-                            @if (item.Children != null)
+                <ul>
+                    @foreach (var child in category.Children)
+                    {
+                        <li><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@child.Url">@child.Name</a></li>
+                    }
+
+                </ul>
+                    }
+
+                </div>
+                }
+                else
+                {
+
+                    @for (int i = 0; i < categories.Count(); i++)
+                    {
+                        <div class="card">
+                            <div class="card-header" id="heading-@i">
+                                <h5 class="mb-0">
+                                    <button class="btn" data-toggle="collapse" data-target="#card-@i" aria-expanded="false" aria-controls="card-@i">
+                                        @if (categories[i].ParentId == null)
+                                        {
+                                            @categories[i].Name
+                                        }
+                                    </button>
+                                </h5>
+                            </div>
+                            @if (categories[i].Children != null)
                             {
-                                <ul>
-                                    @foreach (var sub in item.Children)
-                                    {
-                                        <li ><a  class="@(sub.Url == ((CategoryListViewModel)TempData["Categories"]).SelectedCategory ? "active" : "") " asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@sub.Url">@sub.Name</a></li>
-                                    }
+                                <div id="card-@i" class="collapse" aria-labelledby="heading-@i" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            @foreach (var child in categories[i].Children)
+                                            {
+                                                <li>  <a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@child.Url">@child.Name</a>   </li>
 
-                                </ul>
+                                            }
 
+                                        </ul>
+
+                                    </div>
+                                </div>
                             }
 
-                        </li>
-                    }
-                    else
-                    {
-                        <li>sa</li>
-                    }
+                        </div>
 
-
+                    }
                 }
 
 
-            </ul>
+            </div>
         </div>
         <div class="col-md-9">
             <div class="row">
@@ -117,7 +147,7 @@
 
                 </ul>
             </nav>
-           
+
         </div>
     </div>
 </div>

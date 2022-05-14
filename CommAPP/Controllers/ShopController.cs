@@ -81,10 +81,10 @@ namespace CommAPP.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = await _userManager.FindByNameAsync(userName);   
-                
+                var user = await _userManager.FindByNameAsync(userName);
+
                 var comment = new Comment();
-                
+
                 comment.ProductId = model.Product.Id;
                 comment.Star = model.CommentVM.Star;
                 comment.Text = model.CommentVM.Text;
@@ -106,21 +106,53 @@ namespace CommAPP.Controllers
         public IActionResult GetProductsByCategory(string category, int page = 1)
         {
             const int pageSize = 3;
+            if (category == null)
+            {
 
-            var a = _categoryManager.GetAllWithSubCategories(i => i.Name == category);
+               var categories = _categoryManager.GetAll(i=>i.ParentId == null);
+
+                var vm = new CategoryListViewModel()
+                {
+                    Categories = categories
+                };
+
+                ViewData["Categories"] = vm;
+
+                return View(new ProductListViewModel
+                {
+                    Products = _productManager.GetAll(i => i.IsApproved),
+                       PageDetails = new PageDetails()
+                       {
+                           PageSize = pageSize,
+                           TotalItems = _productManager.GetAll().Count(),
+                           
+                           CurrentPage = page
+                       },
+                });
 
 
-            if (_model == null || a.First().ParentId == null)
+            }
+
+
+            var parentCategory = _categoryManager.GetAll(i => i.Url == category).FirstOrDefault().Parent;
+
+
+
+            if (_model == null)
             {
                 _model = new CategoryListViewModel()
                 {
-                    Categories = _categoryManager.GetAllWithSubCategories(i => i.Name == category),
+                    Category = parentCategory
 
 
                 };
             }
+
             _model.SelectedCategory = category;
-            TempData["Categories"] = _model;
+
+            ViewData["Categories"] = _model;
+
+
             return View(new ProductListViewModel
             {
                 PageDetails = new PageDetails()

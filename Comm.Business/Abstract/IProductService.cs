@@ -9,7 +9,7 @@ namespace Comm.Business.Abstract
     public interface IProductService
     {
 
-        IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetAll(Expression<Func<Product, bool>> filter = null);
         Product GetProductDetails(string url);
         IEnumerable<Product> GetProductsByCategory(string category,int page,int pageSize);
         IEnumerable<Product> GetHomeProducts();

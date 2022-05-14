@@ -17,11 +17,12 @@
 </section>
 @if (Model == null || (Model != null && Model.CartItems.Count() == 0))
 {
+<div class="container">
     <div class="cart-info">
         <p>Cartda məhsul yoxdur.Əlavə etmək üçün klikləyin</p>
-        <a asp-controller="Shop" asp-action="List">Məhsullar</a>
+        <a asp-controller="Shop" asp-action="GetProductsByCategory">Məhsullar</a>
     </div>
-
+</div>
 }
 else
 {

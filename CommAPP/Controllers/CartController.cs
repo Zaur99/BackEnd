@@ -66,6 +66,8 @@ namespace CommAPP.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+
+                //load price and quantity in order to calculate total price
                 var model = new CartModel()
                 {
                     CartItems = cart.CartItems.Select(i => new CartItemModel()
@@ -74,6 +76,7 @@ namespace CommAPP.Controllers
                         Quantity = i.Quantity
                     }).ToList()
                 };
+
                 var json = JsonConvert.SerializeObject(model);
 
                 return Json(json);
