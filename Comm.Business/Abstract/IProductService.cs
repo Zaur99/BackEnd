@@ -12,7 +12,8 @@ namespace Comm.Business.Abstract
         IEnumerable<Product> GetAll(Expression<Func<Product, bool>> filter = null);
         Product GetProductDetails(string url);
         IEnumerable<Product> GetProductsByCategory(string category,int page,int pageSize);
-        IEnumerable<Product> GetHomeProducts();
+        IEnumerable<Product> GetApprovedProductsForPage(int page,int pageSize);
+        IEnumerable<Product> GetFilteredProductsForPage(string searchString,int page,int pageSize);
         Product GetById(int id);
         int GetCountByCategory(string category);
         void Update(Product entity);

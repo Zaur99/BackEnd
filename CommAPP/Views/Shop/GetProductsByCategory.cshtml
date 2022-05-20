@@ -1,4 +1,4 @@
-﻿
+﻿@model ProductListViewModel
 @section Styles{
     <style>
         .product-item-image {
@@ -11,35 +11,36 @@
 
 
 }
+@{
+    var categories = ((CategoryListViewModel)ViewData["Categories"]).Categories == null
+        ? null
+        : ((CategoryListViewModel)ViewData["Categories"]).Categories.ToList();
+
+    var category = ((CategoryListViewModel)ViewData["Categories"]).Category;
+}
 
 <div class="container">
     <div class="row">
         <div class="col-md-3">
             <div id="accordion">
-                @{
-                    var categories = ((CategoryListViewModel)ViewData["Categories"]).Categories == null 
-                        ?  null
-                        : ((CategoryListViewModel)ViewData["Categories"]).Categories.ToList();
 
-                    var category = ((CategoryListViewModel)ViewData["Categories"]).Category;
-                }
                 @if (categories == null)
                 {
-                <div class="list-group">
+                    <div class="list-group">
 
-                    <a class="list-group-item list-group-item-action disabled">@category.Name</a>
-                    @if (category.Children != null)
-                    {
-                <ul>
-                    @foreach (var child in category.Children)
-                    {
-                        <li><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@child.Url">@child.Name</a></li>
-                    }
+                        <a class="list-group-item list-group-item-action disabled">@category.Name</a>
+                        @if (category.Children != null)
+                        {
+                            <ul>
+                                @foreach (var child in category.Children)
+                                {
+                                    <li><a asp-controller="Shop" asp-action="GetProductsByCategory" asp-route-category="@child.Url">@child.Name</a></li>
+                                }
 
-                </ul>
-                    }
+                            </ul>
+                        }
 
-                </div>
+                    </div>
                 }
                 else
                 {
@@ -84,6 +85,7 @@
         </div>
         <div class="col-md-9">
             <div class="row">
+
                 @foreach (var item in Model.Products)
                 {
                     <div class="col-md-4 col-sm-6">
@@ -127,7 +129,11 @@
                             </div>
                             <div class="product-item-info">
                                 <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
-                                <span>@item.Price</span>
+                                <span>
+
+                                    @item.Price.ToString("G29") <span>&#8380;</span>
+
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -139,9 +145,12 @@
 
             <nav style="margin-top:200px;" aria-label="Page navigation example">
                 <ul class="pagination">
+
                     @for (int i = 0; i < Model.PageDetails.ShownProducts(); i++)
                     {
-                        <li class="page-item @(Model.PageDetails.CurrentPage == i+1 ? "active" : "")"><a class="page-link " href="/products/@Model.PageDetails.CurrentCategory?page=@(i+1)">@(i+1)</a></li>
+                        <li class="page-item @(Model.PageDetails.CurrentPage == i+1 ? "active" : "")">
+                      <a class="page-link"
+                         href="/products/@(Model.PageDetails.CurrentCategory == null ? "?page="+ (i+1) : Model.PageDetails.CurrentCategory+"?page="+(i+1))">@(i+1)</a></li>
                     }
 
 

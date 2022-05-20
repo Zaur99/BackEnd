@@ -19,13 +19,17 @@ namespace Comm.DataAccess.Concrete.EF
             this.context = context;
         }
 
-        public IEnumerable<Product> GetApprovedProducts()
+        public IEnumerable<Product> GetApprovedProductsForPage(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            var products = context.Products.Where(i=>i.IsApproved);
+
+            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
         }
 
         public Product GetByIdWithCategories(int id)
         {
+            
 
             return context.Products.Where(i => i.Id == id).FirstOrDefault();
 
@@ -45,14 +49,12 @@ namespace Comm.DataAccess.Concrete.EF
 
         }
 
-        public IEnumerable<Product> GetHomeProducts()
+        public IEnumerable<Product> GetFilteredProductsForPage(string searchString,int page, int pageSize)
         {
+            var products = context.Products.Where(i => i.Name.Contains(searchString));
 
-            return context.Products.Where(i => i.IsApproved && i.IsHome).ToList();
-
+            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
-
-       
 
         public Product GetProductDetails(string url)
         {

@@ -18,6 +18,8 @@ namespace CommAPP.Controllers
         private readonly ICategoryService _categoryManager;
         private readonly ICommentService _commentManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        static CategoryListViewModel _model;
+        
 
         public ShopController(IProductService productManager,
                               ICategoryService categoryManager,
@@ -102,7 +104,8 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
-        static CategoryListViewModel _model;
+       
+        //Path : products/{category}
         public IActionResult GetProductsByCategory(string category, int page = 1)
         {
             const int pageSize = 3;
@@ -120,12 +123,12 @@ namespace CommAPP.Controllers
 
                 return View(new ProductListViewModel
                 {
-                    Products = _productManager.GetAll(i => i.IsApproved),
+                
+                   Products = _productManager.GetApprovedProductsForPage(page,pageSize),
                        PageDetails = new PageDetails()
                        {
                            PageSize = pageSize,
-                           TotalItems = _productManager.GetAll().Count(),
-                           
+                           TotalItems = _productManager.GetAll(i=>i.IsApproved).Count(),
                            CurrentPage = page
                        },
                 });
@@ -133,16 +136,15 @@ namespace CommAPP.Controllers
 
             }
 
+            var cat = _categoryManager.GetAll(i => i.Url == category).FirstOrDefault();
+           
 
-            var parentCategory = _categoryManager.GetAll(i => i.Url == category).FirstOrDefault().Parent;
 
-
-
-            if (_model == null)
+            if (_model == null || cat.Parent == null)
             {
                 _model = new CategoryListViewModel()
                 {
-                    Category = parentCategory
+                    Category = cat
 
 
                 };
@@ -166,6 +168,31 @@ namespace CommAPP.Controllers
                 Products = _productManager.GetProductsByCategory(category, page, pageSize)
             });
 
+        }
+
+
+        public IActionResult Search(string searchString, int page = 1) 
+        {
+            const int pageSize = 3;
+            if (searchString == null)
+            {
+                return RedirectToAction("GetProductsByCategory");
+            }
+
+            var filteredProducts = _productManager.GetAll(i=>i.Name.Contains(searchString));
+            ViewBag.SearchString = searchString;
+
+            return View(new ProductListViewModel
+            {
+                PageDetails = new PageDetails()
+                {
+                    PageSize = pageSize,
+                    TotalItems = filteredProducts.Count(),
+                    CurrentPage = page
+                },
+                Products = _productManager.GetFilteredProductsForPage(searchString,page,pageSize)
+                //Products = filteredProducts
+            });
         }
     }
 

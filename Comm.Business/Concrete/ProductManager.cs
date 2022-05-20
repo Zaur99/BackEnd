@@ -36,6 +36,11 @@ namespace Comm.Business.Concrete
             return _productRepository.GetAll(filter);
         }
 
+        public IEnumerable<Product> GetApprovedProductsForPage(int page, int pageSize)
+        {
+            return _productRepository.GetApprovedProductsForPage(page,pageSize);
+        }
+
         public Product GetById(int id)
         {
             return _productRepository.GetById(id);
@@ -51,9 +56,9 @@ namespace Comm.Business.Concrete
             return _productRepository.GetCountByCategory(category);
         }
 
-        public IEnumerable<Product> GetHomeProducts()
+        public IEnumerable<Product> GetFilteredProductsForPage(string searchString, int page, int pageSize)
         {
-            return _productRepository.GetHomeProducts();
+            return _productRepository.GetFilteredProductsForPage(searchString,page,pageSize);
         }
 
         public Product GetProductDetails(string url)
