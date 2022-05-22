@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                             <div class="product-item-info">
-                                <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                <a asp-controller="Shop" asp-action="Details" asp-route-productname="@item.Url">@item.Name</a>
                                 <span>
 
                                     @item.Price.ToString("G29") <span>&#8380;</span>

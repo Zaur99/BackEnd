@@ -33,7 +33,7 @@
                         }
 
                     </div>
-                    <div class="m-bot15 mb-3"> <strong>Price : </strong> <span class="amount-old">@Model.Product.Price</span>  </div>
+                    <div class="m-bot15 mb-3"> <strong>Price : </strong> <span class="amount-old">@Model.Product.Price.ToString("G29") <span>&#8380;</span></span>  </div>
                     <form asp-controller="Cart" asp-action="AddToCart" method="post">
                         <input type="hidden" name="productId" value="@Model.Product.Id" />
                         <button class="btn btn-primary addToCart" type="submit">Add To Cart</button>

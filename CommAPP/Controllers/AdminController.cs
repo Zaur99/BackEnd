@@ -2,6 +2,7 @@
 using Comm.DataAccess;
 using Comm.Entities;
 using CommAPP.Models.ViewModels;
+using CommAPP.Models.ViewModels.Admin;
 using CommAPP.Models.ViewModels.Roles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -101,7 +102,7 @@ namespace CommAPP.Controllers
                 Name = entity.Name,
                 Price = entity.Price,
                 Url = entity.Url,
-               ImageUrl = entity.ImageUrl,
+                ImageUrl = entity.ImageUrl,
                 IsApproved = entity.IsApproved,
                 IsHome = entity.IsHome,
                 SelectedCategories = entity.ProductCategories.Select(i => i.Category).ToList()
@@ -168,18 +169,40 @@ namespace CommAPP.Controllers
 
             });
         }
+        private NestedCategoriesViewModel Map(Category category)
+        {
+            var categoryMenuItem = new NestedCategoriesViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+            };
 
+            var childCategories = category.Children;
+            foreach (var childCategory in childCategories)
+            {
+                var childCategoryMenuItem = Map(childCategory);
+                categoryMenuItem.AddChildItem(childCategoryMenuItem);
+            }
+
+            return categoryMenuItem;
+        }
         [HttpGet]
         public IActionResult CreateCategory()
         {
             var categories = _categoryService.GetAll();
 
-            var vm = new CategoryListViewModel()
-            {
-                Categories = categories
-            };
 
-            ViewData["Categories"] = vm;
+            var categoryItems = new List<NestedCategoriesViewModel>();
+
+            var topCategories = categories.Where(x => !x.ParentId.HasValue);
+
+            foreach (var category in topCategories)
+            {
+                var categoryMenuItem = Map(category);
+                categoryItems.Add(categoryMenuItem);
+            }
+
+            ViewData["Categories"] = categoryItems;
 
             return View();
         }
@@ -187,14 +210,14 @@ namespace CommAPP.Controllers
         [HttpPost]
         public IActionResult CreateCategory(CategoryModel model)
         {
-
+            
             if (ModelState.IsValid)
             {
                 var entity = new Category
                 {
                     Name = model.Name,
                     Url = model.Url,
-                     
+                    ParentId = model.ParentId
                 };
 
                 _categoryService.Create(entity);

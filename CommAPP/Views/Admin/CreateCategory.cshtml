@@ -15,29 +15,28 @@
             <input type="text" class="form-control" asp-for="Url" placeholder="Url">
         </div>
         
-        <select class="form-select" asp-for="@Model.CategoryName">
+        <select class="form-select" asp-for="@Model.ParentId">
             <option selected>Choose parent category</option>
-            @foreach (var item in ((CategoryListViewModel)ViewData["Categories"]).Categories)
+            @foreach (var parent in (List<NestedCategoriesViewModel>)ViewData["Categories"])
             {
-                @if (item.ParentId == null)
+                if (parent.ChildItems.Any())
                 {
-                    <option value="@item.Name">
-                        @item.Name
+                    <option value="@parent.Id">@parent.Name</option>
+                    @foreach (var child in parent.ChildItems)
+                    {
+                        <option value="@child.Id">- @child.Name</option>
+                    }
 
-                    </option>
                 }
                 else
                 {
-                    <option value="@item.Name">
-                       - @item.Name
-
-                    </option>
-
+                    <option value="@parent.Id">@parent.Name</option>
                 }
-
             }
 
-           
+
+
+
         </select>
         <button type="submit" class="btn btn-primary">Sumbit</button>
     </form>

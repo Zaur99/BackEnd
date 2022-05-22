@@ -16,7 +16,7 @@ namespace CommAPP.Models.ViewModels
 
         [Required(ErrorMessage = "Url boş buraxıla bilməz")]
         public string Url { get; set; }
-        public string CategoryName { get; set; }
+        public int ParentId { get; set; }
         public List<Product> Products { get; set; }
     }
 }
