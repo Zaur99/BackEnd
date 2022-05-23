@@ -5,6 +5,7 @@
     <div class="col-md-3">
 
         <form method="post" action="/Admin/EditCategory">
+            @Html.AntiForgeryToken()
             <div class="text-danger" asp-validation-summary="All"></div>
             <input type="hidden" name="Id" value="@Model.Id" />
             <div class="form-group">

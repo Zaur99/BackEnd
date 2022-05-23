@@ -31,6 +31,7 @@
                         <td>
                             <a class="btn btn-warning" asp-controller="Admin" asp-action="EditCategory" asp-route-id="@b.Id">Edit</a>
                             <form action="/Admin/DeleteCategory" method="post">
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" name="Id" value="@b.Id" />
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>

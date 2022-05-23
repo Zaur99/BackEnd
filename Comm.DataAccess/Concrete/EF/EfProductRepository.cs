@@ -83,7 +83,7 @@ namespace Comm.DataAccess.Concrete.EF
         {
 
             var product = context.Products.FirstOrDefault(i => i.Id == entity.Id);
-
+            var unmatchedCategoryIds = new List<int>();
             if (product != null)
             {
                 product.Name = entity.Name;
@@ -94,11 +94,28 @@ namespace Comm.DataAccess.Concrete.EF
                 product.IsApproved = entity.IsApproved;
                 product.IsHome = entity.IsHome;
 
-                product.ProductCategories = categoryIds.Select(categoryId => new ProductCategory()
-                {
-                    ProductId = entity.Id,
-                    CategoryId = categoryId
-                }).ToList();
+
+                //int[] existingCategoryIds = product.ProductCategories.Select(i => i.CategoryId).ToArray();
+                //for (int i = 0; i < categoryIds.Length; i++)
+                //{
+
+                //    if (!existingCategoryIds.Contains(categoryIds[i]))
+                //    {
+                //        unmatchedCategoryIds[i] = categoryIds[i];
+                //    }
+                //}
+
+
+                //if (unmatchedCategoryIds != null)
+                //{
+                product.ProductCategories.Clear();
+                    product.ProductCategories = categoryIds.Select(categoryId => new ProductCategory()
+                    {
+                        ProductId = entity.Id,
+                        CategoryId = categoryId
+                    }).ToList();
+                //}
+               
             }
             context.SaveChanges();
 

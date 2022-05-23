@@ -57,6 +57,7 @@ namespace CommAPP.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public async Task<IActionResult> CreateProduct(ProductModel model,IFormFile file)
@@ -141,7 +142,7 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
-
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public IActionResult DeleteProduct(int id)
@@ -207,7 +208,9 @@ namespace CommAPP.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
+        
         public IActionResult CreateCategory(CategoryModel model)
         {
             
@@ -252,6 +255,7 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public IActionResult EditCategory(CategoryModel model)
@@ -270,6 +274,7 @@ namespace CommAPP.Controllers
         }
 
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public IActionResult DeleteCategory(int id)
@@ -287,6 +292,7 @@ namespace CommAPP.Controllers
             return RedirectToAction("AdminCategories");
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public IActionResult DeleteFromCategory(int categoryId, int productId)
@@ -295,7 +301,7 @@ namespace CommAPP.Controllers
             return Redirect("EditCategory/" + categoryId);
         }
 
-        public async Task<string> UploadedFile(IFormFile file)
+        private async Task<string> UploadedFile(IFormFile file)
         {
             string uniqueFileName = null;
             if (file != null)
@@ -329,6 +335,7 @@ namespace CommAPP.Controllers
             return View();
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public async Task<IActionResult> CreateRole(RoleModel model)
@@ -343,6 +350,7 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -370,6 +378,7 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
 
         public async Task<IActionResult> EditRole(RoleEditModel model)
@@ -435,6 +444,7 @@ namespace CommAPP.Controllers
 
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> EditUser(UserEditModel model, string[] selectedRoles)
         {
