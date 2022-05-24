@@ -7,16 +7,20 @@
             display: flex;
             align-items: center;
         }
+        .focus {
+            color: orange;
+        }
     </style>
 
 
 }
 @{
-    var categories = ((CategoryListViewModel)ViewData["Categories"]).Categories == null
+    var categories = ((List<CategoryViewModel>)ViewData["Categories"]) == null
         ? null
-        : ((CategoryListViewModel)ViewData["Categories"]).Categories.ToList();
+        : ((List<CategoryViewModel>)ViewData["Categories"]);
 
-    var category = ((CategoryListViewModel)ViewData["Categories"]).Category;
+    var category = ((CategoryViewModel)ViewData["Category"]);
+    
 }
 
 <div class="container">

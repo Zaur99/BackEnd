@@ -6,6 +6,7 @@ using Comm.DataAccess.Concrete;
 using Comm.DataAccess.Concrete.EF;
 using Comm.DataAccess.IdentityModel;
 using Comm.Entities;
+using CommAPP.AutoMapper;
 using CommAPP.Models.ViewModels.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,7 @@ namespace CommAPP
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<CommerceContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("connection"));

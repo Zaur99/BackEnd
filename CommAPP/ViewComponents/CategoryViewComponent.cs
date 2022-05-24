@@ -1,4 +1,5 @@
-﻿using Comm.Business.Abstract;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using CommAPP.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,10 +11,12 @@ namespace CommAPP.ViewComponents
 {
     public class CategoryViewComponent : ViewComponent
     {
-        private ICategoryService _categoryService;
-        public CategoryViewComponent(ICategoryService categoryService)
+        private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
+        public CategoryViewComponent(ICategoryService categoryService,IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
 
@@ -25,7 +28,8 @@ namespace CommAPP.ViewComponents
                 category = RouteData.Values["category"].ToString();
             }
             var categories = _categoryService.GetAll();
-            return View(new CategoryListViewModel {  Categories = categories, SelectedCategory =  category});
+            var vm = _mapper.Map<List<CategoryViewModel>>(categories);
+            return View(vm);
         }
     }
 }

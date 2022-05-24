@@ -1,4 +1,5 @@
-﻿using Comm.Business.Abstract;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using Comm.DataAccess;
 using Comm.Entities;
 using CommAPP.Models.ViewModels;
@@ -18,18 +19,21 @@ namespace CommAPP.Controllers
         private readonly ICategoryService _categoryManager;
         private readonly ICommentService _commentManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        static CategoryListViewModel _model;
-        
+        private readonly IMapper _mapper;
+        static CategoryViewModel _model;
+
 
         public ShopController(IProductService productManager,
                               ICategoryService categoryManager,
                               ICommentService commentManager,
-                              UserManager<ApplicationUser> userManager)
+                              UserManager<ApplicationUser> userManager,
+                              IMapper mapper)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
             _commentManager = commentManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
 
@@ -104,95 +108,111 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
-       
+
         //Path : products/{category}
         public IActionResult GetProductsByCategory(string category, int page = 1)
         {
             const int pageSize = 3;
+
+            IEnumerable<Product> products;
+            IEnumerable<CategoryViewModel> categoryVm;
+
             if (category == null)
             {
 
-               var categories = _categoryManager.GetAll(i=>i.ParentId == null);
+                var categories = _categoryManager.GetAll(i => i.ParentId == null).ToList();
 
-                var vm = new CategoryListViewModel()
-                {
-                    Categories = categories
-                };
 
-                ViewData["Categories"] = vm;
+                categoryVm = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+                
+                products = _productManager.GetApprovedProductsForPage(page, pageSize);
+
+                ViewData["Categories"] = categoryVm;
+
 
                 return View(new ProductListViewModel
                 {
-                
-                   Products = _productManager.GetApprovedProductsForPage(page,pageSize),
-                       PageDetails = new PageDetails()
-                       {
-                           PageSize = pageSize,
-                           TotalItems = _productManager.GetAll(i=>i.IsApproved).Count(),
-                           CurrentPage = page
-                       },
+
+                    Products = products.Select(i => new ProductViewModel()
+                    {
+                        Id = i.Id,
+                        ImageUrl = i.ImageUrl,
+                        Name = i.Name,
+                        Price = i.Price,
+                        Url = i.Url
+                    }),
+                    PageDetails = new PageDetails()
+                    {
+                        PageSize = pageSize,
+                        TotalItems = _productManager.GetAll(i => i.IsApproved).Count(),
+                        CurrentPage = page
+                    },
                 });
 
 
             }
 
             var cat = _categoryManager.GetAll(i => i.Url == category).FirstOrDefault();
-           
 
 
+            //Get parent category if user click child category and create only one instance 
             if (_model == null || cat.Parent == null)
             {
-                _model = new CategoryListViewModel()
-                {
-                    Category = cat
+                _model = _mapper.Map<CategoryViewModel>(cat);
 
-
-                };
             }
 
-            _model.SelectedCategory = category;
+           
+            ViewData["Category"] = _model;
 
-            ViewData["Categories"] = _model;
+            //Get products under particular category per page
+            products = _productManager.GetProductsByCategory(category, page, pageSize);
 
+            var productVm = new ProductListViewModel();
 
-            return View(new ProductListViewModel
+            productVm.Products = _mapper.Map<List<ProductViewModel>>(products.ToList());
+
+            productVm.PageDetails = new PageDetails()
             {
-                PageDetails = new PageDetails()
-                {
-                    PageSize = pageSize,
-                    TotalItems = _productManager.GetCountByCategory(category),
-                    CurrentCategory = category,
-                    CurrentPage = page
-                },
+                PageSize = pageSize,
+                TotalItems = _productManager.GetCountByCategory(category),
+                CurrentCategory = category,
+                CurrentPage = page
+            };
 
-                Products = _productManager.GetProductsByCategory(category, page, pageSize)
-            });
+            return View(productVm);
 
         }
 
 
-        public IActionResult Search(string searchString, int page = 1) 
+        public IActionResult Search(string searchString, int page = 1)
         {
             const int pageSize = 3;
+
             if (searchString == null)
             {
                 return RedirectToAction("GetProductsByCategory");
             }
 
-            var filteredProducts = _productManager.GetAll(i=>i.Name.Contains(searchString));
+            //Get filtered Products
+            var filteredProducts = _productManager.GetAll(i => i.Name.Contains(searchString));
+
+            var products = _productManager.GetFilteredProductsForPage(searchString, page, pageSize);
+
             ViewBag.SearchString = searchString;
 
-            return View(new ProductListViewModel
+
+            var productVm = new ProductListViewModel();
+
+            productVm.Products = _mapper.Map<List<ProductViewModel>>(products.ToList());
+            productVm.PageDetails = new PageDetails()
             {
-                PageDetails = new PageDetails()
-                {
-                    PageSize = pageSize,
-                    TotalItems = filteredProducts.Count(),
-                    CurrentPage = page
-                },
-                Products = _productManager.GetFilteredProductsForPage(searchString,page,pageSize)
-                //Products = filteredProducts
-            });
+                PageSize = pageSize,
+                TotalItems = filteredProducts.Count(),
+                CurrentPage = page
+            };
+
+            return View(productVm);
         }
     }
 

@@ -402,6 +402,8 @@ C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Com
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\CommAPP.pdb
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\CommAPP.Views.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\CommAPP.Views.pdb
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Castle.Core.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
@@ -419,6 +421,9 @@ C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Mic
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
@@ -437,6 +442,7 @@ C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\Sys
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\System.Composition.TypedParts.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\ASUS\source\repos\E-CommerceWebSite\CommAPP\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll

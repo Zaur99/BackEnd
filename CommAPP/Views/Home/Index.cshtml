@@ -1,4 +1,4 @@
-﻿@model ProductListViewModel
+﻿@model IEnumerable<ProductViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -19,7 +19,7 @@
         <div class="col-md-3">
 
             <ul class="list-group">
-                @foreach (var item in ((CategoryListViewModel)ViewData["Categories"]).Categories)
+                @foreach (var item in ((List<CategoryViewModel>)ViewData["Categories"]))
                 {
                     @if (item.ParentId == null)
                     {
@@ -38,7 +38,7 @@
         <div class="col-md-9">
             <div class="row">
 
-                @foreach (var item in Model.Products)
+                @foreach (var item in Model)
                 {
                     <div class="col-sm-6 col-lg-4 col-md-6">
                         <div class="card h-100">

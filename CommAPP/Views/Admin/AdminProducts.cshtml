@@ -1,4 +1,4 @@
-﻿@model ProductListViewModel;
+﻿@model IEnumerable<ProductViewModel>
 
     <div class="container">
         <a asp-controller="Admin" asp-action="CreateProduct" class="btn btn-primary">Create New Product</a>
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var b in Model.Products)
+                @foreach (var b in Model)
                 {
                     <tr>
                         <td>

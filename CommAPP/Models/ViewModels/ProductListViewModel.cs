@@ -22,6 +22,17 @@ namespace CommAPP.Models.ViewModels
     public class ProductListViewModel
     {
         public PageDetails PageDetails { get; set; }
-        public IEnumerable<Product> Products{ get; set; }
+        public IEnumerable<ProductViewModel> Products{ get; set; }
+    }
+
+    public class ProductViewModel {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Url { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+        public bool IsHome { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

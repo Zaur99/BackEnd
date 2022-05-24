@@ -1,4 +1,5 @@
-﻿using Comm.Business.Abstract;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using Comm.DataAccess;
 using Comm.Entities;
 using CommAPP.Models.ViewModels;
@@ -21,34 +22,35 @@ namespace CommAPP.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private IProductService _productService;
-        private ICategoryService _categoryService;
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private RoleManager<IdentityRole> _roleManager;
         private UserManager<ApplicationUser> _userManager;
-
+        private readonly IMapper _mapper;
 
         public AdminController(IProductService productService,
                                 ICategoryService categoryService,
                                 IWebHostEnvironment webHostEnvironment,
                                 UserManager<ApplicationUser> userManager,
-                                RoleManager<IdentityRole> roleManager)
+                                RoleManager<IdentityRole> roleManager,
+                                IMapper mapper)
         {
             _productService = productService;
             _categoryService = categoryService;
             _roleManager = roleManager;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
-
+            _mapper = mapper;
 
 
         }
         public IActionResult AdminProducts()
         {
-            return View(new ProductListViewModel
-            {
-                Products = _productService.GetAll()
-            });
+            var products = _productService.GetAll();
+            var vm = _mapper.Map<List<ProductViewModel>>(products.ToList());
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -163,12 +165,10 @@ namespace CommAPP.Controllers
 
         public IActionResult AdminCategories()
         {
+            var categories = _categoryService.GetAll();
+            var vm = _mapper.Map<IEnumerable<CategoryViewModel>>(categories.ToList());
 
-            return View(new CategoryListViewModel
-            {
-                Categories = _categoryService.GetAll()
-
-            });
+            return View(vm);
         }
         private NestedCategoriesViewModel Map(Category category)
         {

@@ -21,10 +21,7 @@ namespace CommAPP.Models.ViewModels
             get { return CartItems.Sum(i => i.Price * i.Quantity); }
            
         }
-        //public decimal TotalPrice()
-        //{
-        //    return CartItems.Sum(i=>i.Price * i.Quantity);
-        //}
+       
     }
 
     public class CartItemModel
