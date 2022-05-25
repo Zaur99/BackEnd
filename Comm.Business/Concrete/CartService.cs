@@ -8,12 +8,12 @@ using System.Text;
 
 namespace Comm.Business.Concrete
 {
-    public class CartManager : ICartService
+    public class CartService : ICartService
     {
         private ICartRepository _cartRepository;
         private IProductRepository _productRepository;
 
-        public CartManager(ICartRepository cartRepository, IProductRepository productRepository)
+        public CartService(ICartRepository cartRepository, IProductRepository productRepository)
         {
             _cartRepository = cartRepository;
             _productRepository = productRepository;

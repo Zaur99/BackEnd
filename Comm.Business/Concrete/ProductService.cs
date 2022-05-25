@@ -9,10 +9,10 @@ using System.Text;
 
 namespace Comm.Business.Concrete
 {
-    public class ProductManager : IProductService
+    public class ProductService : IProductService
     {
         private IProductRepository _productRepository;
-        public ProductManager(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

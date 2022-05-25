@@ -9,10 +9,10 @@ using System.Text;
 
 namespace Comm.Business.Concrete
 {
-    public class CategoryManager : ICategoryService
+    public class CategoryService : ICategoryService
     {
         private ICategoryRepository _categoryRepository;
-        public CategoryManager(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

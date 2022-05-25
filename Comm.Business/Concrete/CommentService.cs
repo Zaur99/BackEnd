@@ -8,10 +8,10 @@ using System.Text;
 
 namespace Comm.Business.Concrete
 {
-    public class CommentManager : ICommentService
+    public class CommentService : ICommentService
     {
         private ICommentRepository _commentRepository;
-        public CommentManager(ICommentRepository commentRepository)
+        public CommentService(ICommentRepository commentRepository)
         {
             _commentRepository = commentRepository;
             

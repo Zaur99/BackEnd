@@ -1,31 +1,32 @@
-﻿using Comm.Business.Abstract;
-using Comm.DataAccess;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using Comm.Entities;
 using CommAPP.Models;
 using CommAPP.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommAPP.Controllers
 {
     public class CartController : Controller
     {
-        private IProductService _productService;
-        private UserManager<ApplicationUser> _userManager;
-        private ICartService _cartService;
+        private readonly IProductService _productService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICartService _cartService;
+        private readonly IMapper _mapper;
 
-        public CartController(IProductService productService, UserManager<ApplicationUser> userManager, ICartService cartService)
+        public CartController(IProductService productService, 
+                              UserManager<ApplicationUser> userManager, 
+                              ICartService cartService,
+                              IMapper mapper)
         {
             _productService = productService;
             _userManager = userManager;
             _cartService = cartService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -35,8 +36,8 @@ namespace CommAPP.Controllers
             {
                 var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
 
-
-                return View(new CartModel()
+               
+                var cartVm = new CartModel()
                 {
                     Id = cart.Id,
                     CartItems = cart.CartItems.Select(i => new CartItemModel()
@@ -51,8 +52,9 @@ namespace CommAPP.Controllers
                         Star = i.Product.Comments.Any() ? i.Product.Comments.Average(x => Convert.ToDouble(x.Star)) : 0
 
                     }).ToList()
-                });
+                };
 
+                return View(cartVm);
             }
             CartModel cartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
 
@@ -60,7 +62,7 @@ namespace CommAPP.Controllers
         }
 
 
-        //Get Total Price dynamically by requesting Ajax
+        //Get Total Price dynamically by sending request (Ajax)
         public IActionResult GetTotalPrice()
         {
             if (User.Identity.IsAuthenticated)
@@ -99,10 +101,8 @@ namespace CommAPP.Controllers
             }
             else
             {
-
                 AddToCartSession(product, productId);
                 return RedirectToAction("Index");
-
             }
 
         }

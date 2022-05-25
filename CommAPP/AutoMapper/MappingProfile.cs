@@ -16,6 +16,10 @@ namespace CommAPP.AutoMapper
                                                    .ForMember(vm => vm.Parent, opts => opts.MapFrom(src => src.Parent))
                                                    .ReverseMap();
             CreateMap<Product, ProductViewModel>().ReverseMap();
+
+            //Cart
+            CreateMap<CartItem, CartItemModel>().ReverseMap();
+            CreateMap<Cart, CartModel>().ReverseMap();
             
            // CreateMap<Project, ProjectDTO>().ForMember(dto => dto.ProjectCategoryDTOs, opts => opts.MapFrom(src => src.ProjectCategories)).ForMember(dto => dto.ProjectImageDTOs, opts => opts.MapFrom(src => src.ProjectImages)).ReverseMap();
         }

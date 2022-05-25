@@ -10,11 +10,11 @@ using System.Text;
 
 namespace Comm.Business.Concrete
 {
-    public class OrderManager : IOrderService
+    public class OrderService : IOrderService
     {
         private IOrderRepository _repository;
         private ICartRepository _cartRepository;
-        public OrderManager(IOrderRepository repository, ICartRepository cartRepository)
+        public OrderService(IOrderRepository repository, ICartRepository cartRepository)
         {
             _repository = repository;
             _cartRepository = cartRepository;
