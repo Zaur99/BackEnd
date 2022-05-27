@@ -16,10 +16,9 @@ namespace CommAPP.Models.ViewModels
         public string UserId { get; set; }
         
         public List<CartItemModel> CartItems{ get; set; }
-        
-        public decimal TotalPrice { 
+        public decimal TotalPrice {
             get { return CartItems.Sum(i => i.Price * i.Quantity); }
-           
+            set { }
         }
        
     }

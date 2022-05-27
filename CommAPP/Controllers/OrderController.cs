@@ -74,12 +74,13 @@ namespace CommAPP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CompleteOrder(OrderModel model)
+        public  IActionResult CompleteOrder(OrderModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                var cart = _cartService.GetCartByUserId(user.Id);
+                string userId = _userManager.GetUserId(User);
+                var cart = _cartService.GetCartByUserId(userId);
+
                 var order = new Order();
 
                 order.FullName = model.FullName;
@@ -91,7 +92,7 @@ namespace CommAPP.Controllers
                 order.TotalPrice = model.TotalPrice;
                 order.PhoneNumber = model.PhoneNumber;
                 order.OrderStatus = "Pending";
-                order.UserId = user.Id;
+                order.UserId = userId;
 
                 _orderService.Create(order);
 

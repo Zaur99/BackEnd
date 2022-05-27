@@ -1,4 +1,5 @@
-﻿using Comm.Business.Abstract;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using CommAPP.Models.ViewModels.Admin;
 using CommAPP.Models.ViewModels.OrderRelated;
 using Microsoft.AspNetCore.Mvc;
@@ -11,26 +12,19 @@ namespace CommAPP.Controllers
 {
     public class OrderManagementController : Controller
     {
-        private IOrderService _orderService;
-        public OrderManagementController(IOrderService orderService)
+        private readonly IOrderService _orderService;
+        private readonly IMapper _mapper;
+
+        public OrderManagementController(IOrderService orderService, IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
             var orders = _orderService.GetAll();
 
-            var vm = new OrderListViewModel()
-            {
-                OrderListVM = orders.Select(i => new OrderViewModel()
-                {
-                    OrderId = i.Id,
-                    OrderStatus = i.OrderStatus,
-                    OrderedTime = i.OrderedTime
-
-                })
-
-            };
+            var vm = _mapper.Map<IEnumerable<OrderViewModel>>(orders);
 
             return View(vm);
 
@@ -41,25 +35,7 @@ namespace CommAPP.Controllers
         {
             var order = _orderService.GetById(orderId);
 
-            var vm = new OrderFullViewModel()
-            {
-                Id = order.Id,
-                FullName = order.FullName,
-                Email = order.Email,
-                Adress = order.Adress,
-                City = order.City,
-                ExtraDetails = order.ExtraDetails,
-                PhoneNumber = order.PhoneNumber,
-                UserId = order.UserId,
-                User = order.User,
-                TotalPrice = order.TotalPrice,
-                OrderStatus = order.OrderStatus,
-                OrderedTime = order.OrderedTime,
-                OrderItems = order.OrderItems.Select(x => new OrderItemModel() { Product = x.Product, Quantity = x.Quantity })
-
-
-            };
-
+            var vm = _mapper.Map<OrderFullViewModel>(order);
 
             return View(vm);
 

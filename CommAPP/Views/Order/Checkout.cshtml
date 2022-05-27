@@ -1,5 +1,8 @@
 ﻿@model OrderModel
-
+@{
+    var cartItems= ((CartModel)ViewData["Cart"]).CartItems;
+    var cart= ((CartModel)ViewData["Cart"]);
+}
 <div class="container mt-3 mb-3">
     <div class="row">
         <div class="col-md-8">
@@ -35,18 +38,16 @@
                     <span class="text-danger" asp-validation-for="Email"></span>
 
                 </div>
+                <input type="hidden" name="TotalPrice" value="@cart.TotalPrice" />
 
-                @{ 
-                    var cartItems = ((CartModel)ViewData["Cart"]).CartItems;
-                }
-                @for (int i = 0; i < cartItems.Count(); i++)
+                @for (int i = 0; i < cart.CartItems.Count(); i++)
                 {
-                    <input asp-for="@cartItems[i].ImageUrl" type="hidden" />
-                    <input asp-for="@cartItems[i].Name" type="hidden" />
-                    <input asp-for="@cartItems[i].ProductId" type="hidden" />
-                    <input asp-for="@cartItems[i].Price" type="hidden" />
-                    <input asp-for="@cartItems[i].Quantity" type="hidden" />
-                   
+                    <input asp-for="@cart.CartItems[i].ImageUrl" type="hidden" />
+                    <input asp-for="@cart.CartItems[i].Name" type="hidden" />
+                    <input asp-for="@cart.CartItems[i].ProductId" type="hidden" />
+                    <input asp-for="@cart.CartItems[i].Price" type="hidden" />
+                    <input asp-for="@cart.CartItems[i].Quantity" type="hidden" />
+
                 }
 
 
@@ -57,7 +58,8 @@
             </form>
         </div>
         <div class="col-md-4">
-            @foreach (var item in ((CartModel)ViewData["Cart"]).CartItems)
+
+            @foreach (var item in cart.CartItems)
             {
                 <div class="cart-item d-flex">
                     <img width="100" src="~/img/@item.ImageUrl" />
@@ -67,10 +69,10 @@
                         <p>Quantity - @item.Quantity</p>
                     </div>
                 </div>
-                <hr />  
+                <hr />
             }
 
-        <div>@(((CartModel)ViewData["Cart"]).TotalPrice.ToString("G29"))<span>&#8380;</span></div>
+            <div>@cart.TotalPrice.ToString("G29")<span>&#8380;</span></div>
         </div>
     </div>
 

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Comm.Entities;
 using CommAPP.Models.ViewModels;
+using CommAPP.Models.ViewModels.Admin;
+using CommAPP.Models.ViewModels.OrderRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,11 @@ namespace CommAPP.AutoMapper
             //Cart
             CreateMap<CartItem, CartItemModel>().ReverseMap();
             CreateMap<Cart, CartModel>().ReverseMap();
+
+            CreateMap<OrderItem, OrderItemModel>().ReverseMap();
+            CreateMap<Order, OrderFullViewModel>().ReverseMap();
+
+            CreateMap<Order, OrderViewModel>().ForMember(vm => vm.OrderId,opts => opts.MapFrom(src=>src.Id)).ReverseMap();
             
            // CreateMap<Project, ProjectDTO>().ForMember(dto => dto.ProjectCategoryDTOs, opts => opts.MapFrom(src => src.ProjectCategories)).ForMember(dto => dto.ProjectImageDTOs, opts => opts.MapFrom(src => src.ProjectImages)).ReverseMap();
         }

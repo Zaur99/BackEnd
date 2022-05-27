@@ -43,7 +43,7 @@ namespace CommAPP
             {
                 options.UseSqlServer(Configuration.GetConnectionString("connection"));
             });
-            //services.AddDbContext<CommerceContext>();
+           
 
             services.AddSession();
 
@@ -71,9 +71,6 @@ namespace CommAPP
 
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-
-
             });
 
             
