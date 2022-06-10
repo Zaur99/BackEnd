@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Concrete.EF
 {
@@ -18,10 +19,10 @@ namespace Comm.DataAccess.Concrete.EF
         {
             this.context = context;
         }
-        public Category GetByIdWithProducts(int id)
+        public async Task<Category> GetByIdWithProductsAsync(int id)
         {
 
-            return context.Categories.Where(i => i.Id == id).Include(i => i.ProductCategories).ThenInclude(i => i.Product).FirstOrDefault();
+            return await context.Categories.FirstOrDefaultAsync(i => i.Id == id);
 
         }
 
@@ -33,11 +34,11 @@ namespace Comm.DataAccess.Concrete.EF
 
         }
 
-        public List<Category> GetAllWithSubCategories(Expression<Func<Category, bool>> filter = null)
-        {
+        //public async Task<List<Category>> GetAllWithSubCategoriesAsync(Expression<Func<Category, bool>> filter = null)
+        //{
+        //    var 
+        //    return await (filter == null) ? context.Categories.ToListAsync() : context.Categories.Where(filter).ToListAsync();
 
-            return filter == null ? context.Categories.Include(i => i.Children).ToList() : context.Categories.Where(filter).Include(i => i.Children).ToList();
-
-        }
+        //}
     }
 }

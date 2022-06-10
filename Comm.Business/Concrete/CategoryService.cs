@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Concrete
 {
@@ -16,42 +17,43 @@ namespace Comm.Business.Concrete
         {
             _categoryRepository = categoryRepository;
         }
-        public void Create(Category entity)
+        public async Task Create(Category entity)
         {
-            _categoryRepository.Create(entity);
+            await _categoryRepository.Create(entity);
         }
 
-        public void Delete(Category entity)
+        public async Task Delete(Category entity)
         {
-            _categoryRepository.Delete(entity);
+            await _categoryRepository.Delete(entity);
 
         }
 
         public void DeleteFromCategory(int categoryId, int productId)
         {
-            _categoryRepository.DeleteFromCategory(categoryId,productId);
+            _categoryRepository.DeleteFromCategory(categoryId, productId);
         }
 
-        public IEnumerable<Category> GetAll(Expression<Func<Category,bool>> filter = null)
+        public async Task<IEnumerable<Category>> GetAllAsync(Expression<Func<Category, bool>> filter = null)
         {
-            return filter == null ? _categoryRepository.GetAll().ToList() : _categoryRepository.GetAll(filter).ToList();
+            var categories = (filter == null) ? _categoryRepository.GetAllAsync() : _categoryRepository.GetAllAsync(filter);
+            return await categories;
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            return _categoryRepository.GetById(id);
+            return await _categoryRepository.GetByIdAsync(id);
         }
 
-        public Category GetByIdWithProducts(int id)
+        public async Task<Category> GetByIdWithProductsAsync(int id)
         {
-            return _categoryRepository.GetByIdWithProducts(id);
+            return await _categoryRepository.GetByIdWithProductsAsync(id);
         }
-        public List<Category> GetAllWithSubCategories(Expression<Func<Category, bool>> filter = null) {
-            return filter == null ? _categoryRepository.GetAllWithSubCategories() : _categoryRepository.GetAllWithSubCategories(filter);
-        }
-        public void Update(Category entity)
+        //public List<Category> GetAllWithSubCategories(Expression<Func<Category, bool>> filter = null) {
+        //    return filter == null ? _categoryRepository.GetAllWithSubCategories() : _categoryRepository.GetAllWithSubCategories(filter);
+        //}
+        public async Task Update(Category entity)
         {
-            _categoryRepository.Update(entity);
+            await _categoryRepository.Update(entity);
 
         }
     }

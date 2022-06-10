@@ -27,6 +27,8 @@ namespace CommAPP.AutoMapper
             CreateMap<Order, OrderFullViewModel>().ReverseMap();
 
             CreateMap<Order, OrderViewModel>().ForMember(vm => vm.OrderId,opts => opts.MapFrom(src=>src.Id)).ReverseMap();
+
+            CreateMap<Order, OrderModel>().ReverseMap();
             
            // CreateMap<Project, ProjectDTO>().ForMember(dto => dto.ProjectCategoryDTOs, opts => opts.MapFrom(src => src.ProjectCategories)).ForMember(dto => dto.ProjectImageDTOs, opts => opts.MapFrom(src => src.ProjectImages)).ReverseMap();
         }

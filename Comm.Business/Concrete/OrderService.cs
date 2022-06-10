@@ -7,62 +7,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Concrete
 {
     public class OrderService : IOrderService
     {
-        private IOrderRepository _repository;
+        private IOrderRepository _orderRepository;
         private ICartRepository _cartRepository;
-        public OrderService(IOrderRepository repository, ICartRepository cartRepository)
+        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository)
         {
-            _repository = repository;
+            _orderRepository = orderRepository;
             _cartRepository = cartRepository;
         }
 
        
 
-        public void Create(Order entity)
+        public async Task Create(Order entity)
         {
-            _repository.Create(entity);
+            await _orderRepository.Create(entity);
         }
 
-        public void Delete(Order entity)
+        public async Task Delete(Order entity)
         {
-            _repository.Delete(entity);
+            await _orderRepository.Delete(entity);
         }
 
-        public IEnumerable<Order> GetAll(Expression<Func<Order, bool>> filter = null)
+        public async Task<IEnumerable<Order>> GetAllAsync(Expression<Func<Order, bool>> filter = null)
         {
-            return _repository.GetAll(filter);
+            return await _orderRepository.GetAllAsync(filter);
         }
 
-        public Order GetById(int id)
+        public async  Task<Order> GetByIdAsync(int id)
         {
-            return _repository.GetById(id);
+            return await _orderRepository.GetByIdAsync(id);
 
         }
 
-        public List<Order> GetOrdersByUserId(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
         {
-            return _repository.GetOrdersByUserId(userId);
+            return await _orderRepository.GetOrdersByUserIdAsync(userId);
         }
 
-        public void PassCartToOrder(int orderId, int cartId)
+        public async Task  PassCartToOrder(int orderId, int cartId)
         {
-            var order = _repository.GetById(orderId);
-            var cart = _cartRepository.GetById(cartId);
+            var order =await _orderRepository.GetByIdAsync(orderId);
+            var cart = await _cartRepository.GetByIdAsync(cartId);
 
             order.OrderItems = cart.CartItems.Select(i => new OrderItem()
             { OrderId = order.Id, Product = i.Product, ProductId = i.ProductId, Order = order, Quantity = i.Quantity }).ToList();
-            
 
-            _repository.Update(order);
+
+            await _orderRepository.Update(order);
         }
 
-        public void Update(Order entity)
+        public async Task Update(Order entity)
         {
-            _repository.Update(entity);
+            await _orderRepository.Update(entity);
         }
     }
 }

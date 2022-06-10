@@ -1,4 +1,5 @@
 ﻿using Comm.Entities;
+using CommAPP.Models.Validation;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,16 @@ using System.Threading.Tasks;
 
 namespace CommAPP.Models.ViewModels
 {
+    public class ProductEditViewModel
+    {
+        public ProductModel ProductEditModel { get; set; }
+
+        [AllowedExtensions(new string[] { ".jpg", ".png" })]
+        [DataType(DataType.Upload)]
+        public IFormFile File { get; set; }
+
+
+    }
     public class ProductModel
     {
         public int Id { get; set; }

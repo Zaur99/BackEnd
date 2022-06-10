@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Abstract
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        Category GetByIdWithProducts(int id);
+        Task<Category> GetByIdWithProductsAsync(int id);
         void DeleteFromCategory(int categoryId, int productId);
-        List<Category> GetAllWithSubCategories(Expression<Func<Category,bool>> filter= null);
+        //Task<List<Category>> GetAllWithSubCategoriesAsync(Expression<Func<Category,bool>> filter= null);
     }
 }

@@ -43,7 +43,7 @@ namespace CommAPP.Controllers
             {
                 return NotFound();
             }
-            Product product = _productManager.GetProductDetails(productname);
+            Product product = await _productManager.GetProductDetailsAsync(productname);
 
             if (User.Identity.IsAuthenticated)
             {
@@ -98,7 +98,7 @@ namespace CommAPP.Controllers
                 comment.User.UserName = userName;
                 comment.UserId = user.Id;
 
-                _commentManager.Create(comment);
+                await _commentManager.Create(comment);
                 await _userManager.UpdateAsync(user);
 
                 return RedirectToAction("Details", "Shop", new { productname = model.Product.Url });
@@ -110,7 +110,7 @@ namespace CommAPP.Controllers
 
 
         //Path : products/{category}
-        public IActionResult GetProductsByCategory(string category, int page = 1)
+        public async Task<IActionResult> GetProductsByCategory(string category, int page = 1)
         {
             const int pageSize = 3;
 
@@ -120,12 +120,12 @@ namespace CommAPP.Controllers
             if (category == null)
             {
 
-                var categories = _categoryManager.GetAll(i => i.ParentId == null).ToList();
+                var categories = await _categoryManager.GetAllAsync(i => i.ParentId == null);
 
 
                 categoryVm = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
                 
-                products = _productManager.GetApprovedProductsForPage(page, pageSize);
+                products =await _productManager.GetApprovedProductsForPageAsync(page, pageSize);
 
                 ViewData["Categories"] = categoryVm;
 
@@ -144,7 +144,7 @@ namespace CommAPP.Controllers
                     PageDetails = new PageDetails()
                     {
                         PageSize = pageSize,
-                        TotalItems = _productManager.GetAll(i => i.IsApproved).Count(),
+                        TotalItems =   _productManager.GetAllAsync(i => i.IsApproved).Result.Count(),
                         CurrentPage = page
                     },
                 });
@@ -152,7 +152,7 @@ namespace CommAPP.Controllers
 
             }
 
-            var cat = _categoryManager.GetAll(i => i.Url == category).FirstOrDefault();
+            var cat =  _categoryManager.GetAllAsync(i => i.Url == category).Result.FirstOrDefault();
 
 
             //Get parent category if user click child category and create only one instance 
@@ -166,16 +166,15 @@ namespace CommAPP.Controllers
             ViewData["Category"] = _model;
 
             //Get products under particular category per page
-            products = _productManager.GetProductsByCategory(category, page, pageSize);
+            products = await _productManager.GetProductsByCategoryAsync(category, page, pageSize);
 
             var productVm = new ProductListViewModel();
 
             productVm.Products = _mapper.Map<List<ProductViewModel>>(products.ToList());
-
             productVm.PageDetails = new PageDetails()
             {
                 PageSize = pageSize,
-                TotalItems = _productManager.GetCountByCategory(category),
+                TotalItems = await _productManager.GetCountByCategoryAsync(category),
                 CurrentCategory = category,
                 CurrentPage = page
             };
@@ -185,7 +184,7 @@ namespace CommAPP.Controllers
         }
 
 
-        public IActionResult Search(string searchString, int page = 1)
+        public async Task<IActionResult> Search(string searchString, int page = 1)
         {
             const int pageSize = 3;
 
@@ -195,16 +194,16 @@ namespace CommAPP.Controllers
             }
 
             //Get filtered Products
-            var filteredProducts = _productManager.GetAll(i => i.Name.Contains(searchString));
+            var filteredProducts =await  _productManager.GetAllAsync(i => i.Name.Contains(searchString));
 
-            var products = _productManager.GetFilteredProductsForPage(searchString, page, pageSize);
+            var products =await _productManager.GetFilteredProductsForPageAsync(searchString, page, pageSize);
 
             ViewBag.SearchString = searchString;
 
 
             var productVm = new ProductListViewModel();
 
-            productVm.Products = _mapper.Map<List<ProductViewModel>>(products.ToList());
+            productVm.Products = _mapper.Map<List<ProductViewModel>>(products);
             productVm.PageDetails = new PageDetails()
             {
                 PageSize = pageSize,

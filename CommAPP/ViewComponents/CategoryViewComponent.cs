@@ -20,14 +20,14 @@ namespace CommAPP.ViewComponents
         }
 
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             string category = "";
             if (RouteData.Values["category"] != null)
             {
                 category = RouteData.Values["category"].ToString();
             }
-            var categories = _categoryService.GetAll();
+            var categories = await _categoryService.GetAllAsync();
             var vm = _mapper.Map<List<CategoryViewModel>>(categories);
             return View(vm);
         }

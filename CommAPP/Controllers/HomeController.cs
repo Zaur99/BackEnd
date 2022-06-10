@@ -4,6 +4,7 @@ using CommAPP.Models.ViewModels;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CommAPP.Controllers
 {
@@ -19,17 +20,15 @@ namespace CommAPP.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var categories = _categoryService.GetAll();
-            var products = _productService.GetAll(i => i.IsHome);
+            var categories =await  _categoryService.GetAllAsync();
+            var products =await _productService.GetAllAsync(i => i.IsHome);
 
-            var cateogoryVm = _mapper.Map<List<CategoryViewModel>>(categories.ToList());
-            var productVm = _mapper.Map<List<ProductViewModel>>(products.ToList());
-            //var vm = new CategoryListViewModel() {
-            //   Categories =   categories
-            //};
+            var cateogoryVm = _mapper.Map<List<CategoryViewModel>>(categories);
+            var productVm = _mapper.Map<List<ProductViewModel>>(products);
+            
 
             ViewData["Categories"] = cateogoryVm;
 

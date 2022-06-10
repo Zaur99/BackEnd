@@ -3,19 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Abstract
 {
-    public interface IOrderService 
+    public interface IOrderService
     {
-        IEnumerable<Order> GetAll(Expression<Func<Order, bool>> filter = null);
+        Task<IEnumerable<Order>> GetAllAsync(Expression<Func<Order, bool>> filter = null);
 
-        Order GetById(int id);
+        Task<Order> GetByIdAsync(int id);
 
-        void Update(Order entity);
-        void Delete(Order entity);
-        void Create(Order entity);
-        public List<Order> GetOrdersByUserId(string userId);
-        public void PassCartToOrder(int orderId, int cartId);
+        Task Update(Order entity);
+        Task Delete(Order entity);
+        Task Create(Order entity);
+        Task<List<Order>> GetOrdersByUserIdAsync(string userId);
+        Task PassCartToOrder(int orderId, int cartId);
     }
 }

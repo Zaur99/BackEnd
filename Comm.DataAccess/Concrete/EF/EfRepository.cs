@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Concrete.EF
 {
@@ -19,42 +20,42 @@ namespace Comm.DataAccess.Concrete.EF
         {
             this.context = context;
         }
-        public void Create(T entity)
+        public async Task Create(T entity)
         {
 
             context.Entry(entity).State = EntityState.Added;
-            context.SaveChanges();
-
+            await context.SaveChangesAsync();
+            
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
 
             context.Entry(entity).State = EntityState.Deleted;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
         {
 
-            return filter == null ? context.Set<T>().ToList() : context.Set<T>().Where(filter).ToList();
+            return filter == null ? await context.Set<T>().ToListAsync() : await context.Set<T>().Where(filter).ToListAsync();
 
         }
 
-        public T GetById(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
 
-            return context.Set<T>().Find(id);
+            return await context.Set<T>().FindAsync(id);
 
         }
 
-        public virtual void Update(T entity)
+        public async virtual Task Update(T entity)
         {
 
             context.Entry(entity).State = EntityState.Modified;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
         }
     }

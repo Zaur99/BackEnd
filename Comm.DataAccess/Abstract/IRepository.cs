@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Abstract
 {
    public interface IRepository<T>
     {
-        IEnumerable<T> GetAll(Expression<Func<T,bool>> filter = null);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T,bool>> filter = null);
 
-        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
 
-        void Update(T entity);
-        void Delete(T entity);
-        void Create(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
+        Task Create(T entity);
     }
 }

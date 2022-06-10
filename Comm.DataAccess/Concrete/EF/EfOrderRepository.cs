@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Concrete.EF
 {
@@ -18,9 +19,9 @@ namespace Comm.DataAccess.Concrete.EF
             this.context = context;
         }
 
-        public List<Order> GetOrdersByUserId(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
         {
-            return context.Orders.Where(i => i.UserId == userId).Include(i => i.OrderItems).ThenInclude(i=>i.Product).ToList();
+            return await context.Orders.Where(i => i.UserId == userId).ToListAsync();
         }
     }
 }

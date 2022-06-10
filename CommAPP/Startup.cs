@@ -141,7 +141,7 @@ namespace CommAPP
                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-             SeedIdentity.Seed(userManager, roleManager, configuration).Wait();
+            // SeedIdentity.Seed(userManager, roleManager, configuration).Wait();
         }
     }
 }

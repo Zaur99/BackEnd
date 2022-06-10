@@ -21,9 +21,11 @@ namespace CommAPP.Controllers
         private SignInManager<ApplicationUser> _signInManager;
         private IEmailSender _emailSender;
         private ICartService _cartService;
-     
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, ICartService cartService)
+
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                 SignInManager<ApplicationUser> signInManager,
+                                 IEmailSender emailSender, ICartService cartService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,7 +39,7 @@ namespace CommAPP.Controllers
         public IActionResult Login(string ReturnUrl = null)
         {
 
-            return View(new LoginModel { ReturnUrl = ReturnUrl  });
+            return View(new LoginModel { ReturnUrl = ReturnUrl });
         }
 
         [HttpPost]
@@ -68,13 +70,13 @@ namespace CommAPP.Controllers
                 if (SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") != null)
                 {
                     //Pass items in session to User Cart after login completed
-                    PassSessionToUserCart(user.Id);
+                    await PassSessionToUserCart(user.Id);
 
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
 
                 }
-                   
-                return Redirect(model.ReturnUrl??"~/");
+
+                return Redirect(model.ReturnUrl ?? "~/");
             }
 
 
@@ -83,35 +85,35 @@ namespace CommAPP.Controllers
             return View(model);
         }
 
-        public void PassSessionToUserCart(string userId)
+        public async Task PassSessionToUserCart(string userId)
         {
             if (SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart") != null)
             {
                 CartModel cartModel = SessionHelper.GetObjectFromJson<CartModel>(HttpContext.Session, "cart");
-                var cart = _cartService.GetCartByUserId(userId);
-                
+                var cart  =await _cartService.GetCartByUserIdAsync(userId); 
+
                 if (cart != null)
                 {
                     foreach (var item in cartModel.CartItems)
                     {
-                      
-                        var index = cart.CartItems.FindIndex(i=>i.ProductId == item.ProductId);
-                        if (index < 0 )
+
+                        var index = cart.CartItems.FindIndex(i => i.ProductId == item.ProductId);
+                        if (index < 0)
                         {
                             cart.CartItems.Add(new CartItem() { CartId = cart.Id, ProductId = item.ProductId, Quantity = item.Quantity });
                         }
                         else
                         {
-                            cart.CartItems[index].Quantity+= item.Quantity;
+                            cart.CartItems[index].Quantity += item.Quantity;
                         }
 
-                        
+
                     }
 
-                    _cartService.Update(cart);
-                   
+                    await _cartService.Update(cart);
+
                 }
-              
+
 
             }
 
@@ -191,14 +193,14 @@ namespace CommAPP.Controllers
             if (result.Succeeded)
             {
                 //After confirmation create initial cart for user
-                _cartService.InitializeCart(user.Id);
+                await _cartService.InitializeCartAsync(user.Id);
                 HttpContext.Session.Clear();
 
 
 
                 return RedirectToAction("Index", "Cart");
-                
-               
+
+
 
             }
 

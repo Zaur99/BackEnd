@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Concrete.EF
 {
@@ -19,23 +20,21 @@ namespace Comm.DataAccess.Concrete.EF
             this.context = context;
         }
 
-        public IEnumerable<Product> GetApprovedProductsForPage(int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetApprovedProductsForPageAsync(int page, int pageSize)
         {
             var products = context.Products.Where(i=>i.IsApproved);
 
-            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return  await products.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
         }
 
-        public Product GetByIdWithCategories(int id)
+        public async Task<Product> GetByIdWithCategoriesAsync(int id)
         {
-            
-
-            return context.Products.Where(i => i.Id == id).FirstOrDefault();
+            return await context.Products.FirstOrDefaultAsync(i => i.Id == id);
 
         }
 
-        public int GetCountByCategory(string category)
+        public async Task<int> GetCountByCategoryAsync(string category)
         {
 
             var products = context.Products.AsQueryable();
@@ -45,25 +44,25 @@ namespace Comm.DataAccess.Concrete.EF
                 products = products.Where(i => i.ProductCategories.Any(a => a.Category.Url == category.ToLower()));
             }
 
-            return products.Count();
+            return await products.CountAsync();
 
         }
 
-        public IEnumerable<Product> GetFilteredProductsForPage(string searchString,int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetFilteredProductsForPageAsync(string searchString,int page, int pageSize)
         {
             var products = context.Products.Where(i => i.Name.Contains(searchString));
 
-            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return  await products.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public Product GetProductDetails(string url)
+        public async Task<Product> GetProductDetailsAsync(string url)
         {
 
-            return context.Products.Where(i => i.Url == url.ToLower()).FirstOrDefault();
+            return await context .Products.FirstOrDefaultAsync(i => i.Url == url.ToLower());
 
         }
 
-        public IEnumerable<Product> GetProductsByCategory(string category, int page, int pageSize)
+        public async Task<IEnumerable<Product>>  GetProductsByCategoryAsync(string category, int page, int pageSize)
         {
 
             var products = context.Products.AsQueryable();
@@ -74,15 +73,15 @@ namespace Comm.DataAccess.Concrete.EF
 
             }
 
-            return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return await products.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
 
         }
 
-        public void Update(Product entity, int[] categoryIds)
+        public async Task Update(Product entity, int[] categoryIds)
         {
 
-            var product = context.Products.FirstOrDefault(i => i.Id == entity.Id);
+            var product = await context.Products.FirstOrDefaultAsync(i => i.Id == entity.Id);
             var unmatchedCategoryIds = new List<int>();
             if (product != null)
             {
@@ -95,29 +94,16 @@ namespace Comm.DataAccess.Concrete.EF
                 product.IsHome = entity.IsHome;
 
 
-                //int[] existingCategoryIds = product.ProductCategories.Select(i => i.CategoryId).ToArray();
-                //for (int i = 0; i < categoryIds.Length; i++)
-                //{
-
-                //    if (!existingCategoryIds.Contains(categoryIds[i]))
-                //    {
-                //        unmatchedCategoryIds[i] = categoryIds[i];
-                //    }
-                //}
-
-
-                //if (unmatchedCategoryIds != null)
-                //{
                 product.ProductCategories.Clear();
                     product.ProductCategories = categoryIds.Select(categoryId => new ProductCategory()
                     {
                         ProductId = entity.Id,
                         CategoryId = categoryId
                     }).ToList();
-                //}
+               
                
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
 
 

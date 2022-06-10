@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.DataAccess.Concrete.EF
 {
@@ -20,10 +21,10 @@ namespace Comm.DataAccess.Concrete.EF
 
       
 
-        public Cart GetCartByUserId(string userId)
+        public  async Task<Cart> GetCartByUserIdAsync(string userId)
         {
 
-            return context.Carts.Include(i => i.CartItems).ThenInclude(i => i.Product).FirstOrDefault(i => i.UserId == userId);
+            return await context.Carts.FirstOrDefaultAsync(i => i.UserId == userId);
 
 
         }
@@ -41,11 +42,11 @@ namespace Comm.DataAccess.Concrete.EF
 
         }
 
-        public override void Update(Cart entity)
+        public async override Task Update(Cart entity)
         {
 
             context.Carts.Update(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
         }
     }

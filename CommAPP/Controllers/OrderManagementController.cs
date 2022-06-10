@@ -20,9 +20,9 @@ namespace CommAPP.Controllers
             _orderService = orderService;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public  async Task<IActionResult> Index()
         {
-            var orders = _orderService.GetAll();
+            var orders = await _orderService.GetAllAsync();
 
             var vm = _mapper.Map<IEnumerable<OrderViewModel>>(orders);
 
@@ -31,9 +31,9 @@ namespace CommAPP.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int orderId)
+        public async Task<IActionResult> Edit(int orderId)
         {
-            var order = _orderService.GetById(orderId);
+            var order = await _orderService.GetByIdAsync(orderId);
 
             var vm = _mapper.Map<OrderFullViewModel>(order);
 
@@ -41,15 +41,15 @@ namespace CommAPP.Controllers
 
         }
         [HttpPost]
-        public IActionResult Edit(OrderFullViewModel model)
+        public async Task<IActionResult> Edit(OrderFullViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var order = _orderService.GetById(model.Id);
+                var order =await _orderService.GetByIdAsync(model.Id);
 
                 order.OrderStatus = model.OrderStatus;
 
-                _orderService.Update(order);
+                await _orderService.Update(order);
             }
             return RedirectToAction("Index");
         }

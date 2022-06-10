@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Abstract
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetAll(Expression<Func<Category, bool>> filter = null);
+        Task<IEnumerable<Category>> GetAllAsync(Expression<Func<Category, bool>> filter = null);
 
-        Category GetById(int id);
+        Task<Category> GetByIdAsync(int id);
 
-        void Update(Category entity);
-        void Delete(Category entity);
-        void Create(Category entity);
-        Category GetByIdWithProducts(int id);
-        List<Category> GetAllWithSubCategories(Expression<Func<Category,bool>> filter = null);
+        Task Update(Category entity);
+        Task Delete(Category entity);
+        Task Create(Category entity);
+        //Category GetByIdWithProducts(int id);
+        //List<Category> GetAllWithSubCategories(Expression<Func<Category,bool>> filter = null);
         void DeleteFromCategory(int categoryId, int productId);
     }
 }

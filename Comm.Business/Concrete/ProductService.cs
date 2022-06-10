@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Concrete
 {
@@ -16,71 +17,71 @@ namespace Comm.Business.Concrete
         {
             _productRepository = productRepository;
         }
-        public void Create(Product entity)
+        public async Task Create(Product entity)
         {
-             _productRepository.Create(entity);
+            await _productRepository.Create(entity);
         }
 
-        public void Delete(Product entity)
+        public async Task Delete(Product entity)
         {
-            _productRepository.Delete(entity);
+            await _productRepository.Delete(entity);
         }
 
-        public IEnumerable<Product> GetAll()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return _productRepository.GetAll().ToList();
+            return await _productRepository.GetAllAsync();
         }
 
-        public IEnumerable<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        public async Task<IEnumerable<Product>> GetAllAsync(Expression<Func<Product, bool>> filter = null)
         {
-            return _productRepository.GetAll(filter);
+            return await _productRepository.GetAllAsync(filter);
         }
 
-        public IEnumerable<Product> GetApprovedProductsForPage(int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetApprovedProductsForPageAsync(int page, int pageSize)
         {
-            return _productRepository.GetApprovedProductsForPage(page,pageSize);
+            return await _productRepository.GetApprovedProductsForPageAsync(page, pageSize);
         }
 
-        public Product GetById(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
-            return _productRepository.GetById(id);
+            return await _productRepository.GetByIdAsync(id);
         }
 
-        public Product GetByIdWithCategories(int id)
+        public async Task<Product> GetByIdWithCategoriesAsync(int id)
         {
-            return _productRepository.GetByIdWithCategories(id);
+            return await _productRepository.GetByIdWithCategoriesAsync(id);
         }
 
-        public int GetCountByCategory(string category)
+        public async Task<int> GetCountByCategoryAsync(string category)
         {
-            return _productRepository.GetCountByCategory(category);
+            return await _productRepository.GetCountByCategoryAsync(category);
         }
 
-        public IEnumerable<Product> GetFilteredProductsForPage(string searchString, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetFilteredProductsForPageAsync(string searchString, int page, int pageSize)
         {
-            return _productRepository.GetFilteredProductsForPage(searchString,page,pageSize);
+            return await _productRepository.GetFilteredProductsForPageAsync(searchString, page, pageSize);
         }
 
-        public Product GetProductDetails(string url)
+        public async Task<Product> GetProductDetailsAsync(string url)
         {
-            return _productRepository.GetProductDetails(url);
+            return await _productRepository.GetProductDetailsAsync(url);
         }
 
-        public IEnumerable<Product> GetProductsByCategory(string category,int page,int pageSize)
+        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string category, int page, int pageSize)
         {
-            return _productRepository.GetProductsByCategory(category, page,pageSize);
+            return await _productRepository.GetProductsByCategoryAsync(category, page, pageSize);
         }
 
-     
 
-        public void Update(Product entity)
+
+        public async Task Update(Product entity)
         {
-            _productRepository.Update(entity);
+            await _productRepository.Update(entity);
         }
 
-        public void Update(Product entity, int[] categoryIds)
+        public async Task Update(Product entity, int[] categoryIds)
         {
-            _productRepository.Update(entity,categoryIds);
+            await _productRepository.Update(entity, categoryIds);
         }
     }
 }

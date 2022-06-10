@@ -1,32 +1,32 @@
-﻿@model ProductModel
+﻿@model ProductEditViewModel
 <form method="post" action="/Admin/EditProduct" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-9">
 
-            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ProductEditModel.Id"/>
             <div class="form-group">
                 <label for="a">Name</label>
-                <input type="text" class="form-control" id="a" aria-describedby="emailHelp" asp-for="Name">
-                <span class="text-danger" asp-validation-for="Name"></span>
+                <input type="text" class="form-control" id="a" aria-describedby="emailHelp" asp-for="ProductEditModel.Name">
+                <span class="text-danger" asp-validation-for="ProductEditModel.Name"></span>
             </div>
             <div class="form-group">
                 <label for="b">Price</label>
-                <input type="text" class="form-control" id="b" asp-for="Price">
-                <span class="text-danger" asp-validation-for="Price"></span>
+                <input type="text" class="form-control" id="b" asp-for="ProductEditModel.Price">
+                <span class="text-danger" asp-validation-for="ProductEditModel.Price"></span>
 
             </div>
 
             <div class="form-group">
                 <label for="c">Description</label>
-                <input type="text" class="form-control" id="c" asp-for="Description">
-                <span class="text-danger" asp-validation-for="Description"></span>
+                <input type="text" class="form-control" id="c" asp-for="ProductEditModel.Description">
+                <span class="text-danger" asp-validation-for="ProductEditModel.Description"></span>
 
             </div>
 
             <div class="form-group">
                 <label for="d">Url</label>
-                <input type="text" class="form-control" id="d" asp-for="Url">
-                <span class="text-danger" asp-validation-for="Url"></span>
+                <input type="text" class="form-control" id="d" asp-for="ProductEditModel.Url">
+                <span class="text-danger" asp-validation-for="ProductEditModel.Url"></span>
 
             </div>
 
@@ -34,9 +34,10 @@
             <div class="form-group">
                 <label for="d">Image</label>
 
-                <input type="hidden" asp-for="@Model.ImageUrl" />
-                <img src="~/img/@Model.ImageUrl" style="width:80px;" />
-                <input name="file" type="file" value="@Model.ImageUrl"  />
+                <input type="hidden" asp-for="@Model.ProductEditModel.ImageUrl" />
+                <img src="~/img/@Model.ProductEditModel.ImageUrl" style="width:80px;" />
+                <input asp-for="@Model.File" type="file" value="@Model.ProductEditModel.ImageUrl" />
+                <span class="text-danger" asp-validation-for="@Model.File"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Sumbit</button>
@@ -44,17 +45,17 @@
         </div>
 
         <div class="col-md-3">
-            @for (int i = 0; i < Model.SelectedCategories.Count; i++)
+            @for (int i = 0; i < Model.ProductEditModel.SelectedCategories.Count; i++)
             {
-                <input type="hidden" name="SelectedCategories[@i].Id" value="@Model.SelectedCategories[@i].Id" />
-                <input type="hidden" name="SelectedCategories[@i].Name" value="@Model.SelectedCategories[@i].Name" />
+                <input type="hidden" asp-for="@Model.ProductEditModel.SelectedCategories[@i].Id" />
+                <input type="hidden" asp-for="@Model.ProductEditModel.SelectedCategories[@i].Name"/>
             }
 
             @foreach (var category in ViewBag.Categories)
             {
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="categoryIds" value="@category.Id" id="category_@category.Id" @(Model.SelectedCategories.Any(i => i.Id == category.Id) ? "checked" : "")>
+                    <input class="form-check-input" type="checkbox" name="categoryIds" value="@category.Id" id="category_@category.Id" @(Model.ProductEditModel.SelectedCategories.Any(i => i.Id == category.Id) ? "checked" : "")>
                     <label class="form-check-label" for="category_@category.Id">
                         @category.Name
                     </label>
@@ -64,14 +65,14 @@
 
             <hr />
             <div class="form-check">
-                <input class="form-check-input" id="y" type="checkbox" asp-for="@Model.IsHome">
+                <input class="form-check-input" id="y" type="checkbox" asp-for="@Model.ProductEditModel.IsHome">
                 <label class="form-check-label" for="y">
                   IsHome
                 </label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" id="x" type="checkbox" asp-for="@Model.IsApproved">
+                <input class="form-check-input" id="x" type="checkbox" asp-for="@Model.ProductEditModel.IsApproved">
                 <label class="form-check-label" for="x">
                     IsApproved
                 </label>

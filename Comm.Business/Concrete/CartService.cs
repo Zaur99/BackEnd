@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Concrete
 {
@@ -21,21 +22,19 @@ namespace Comm.Business.Concrete
 
 
 
-        public void InitializeCart(string userId)
+        public async Task InitializeCartAsync(string userId)
         {
-            _cartRepository.Create(new Cart() { UserId = userId });
+            await _cartRepository.Create(new Cart() { UserId = userId });
 
 
         }
 
 
-        public void AddToCart(int productId, string userId)
+        public async Task AddToCart(int productId, string userId)
         {
 
-            var product = _productRepository.GetById(productId);
-
-
-            var cart = GetCartByUserId(userId);
+            var product = await _productRepository.GetByIdAsync(productId);
+            var cart = await GetCartByUserIdAsync(userId);
 
             if (cart != null)
             {
@@ -57,19 +56,19 @@ namespace Comm.Business.Concrete
                     cart.CartItems[index].Quantity++;
                 }
 
-                _cartRepository.Update(cart);
+                await _cartRepository.Update(cart);
             }
 
         }
 
-        public Cart GetCartByUserId(string userId)
+        public async Task<Cart> GetCartByUserIdAsync(string userId)
         {
-            return _cartRepository.GetCartByUserId(userId);
+            return await _cartRepository.GetCartByUserIdAsync(userId);
         }
 
-        public int GetCountItems(string userId)
+        public async Task<int> GetCountItemsAsync(string userId)
         {
-            var cart = _cartRepository.GetCartByUserId(userId);
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
             var count = 0;
             if (cart != null)
             {
@@ -83,14 +82,14 @@ namespace Comm.Business.Concrete
             return count;
         }
 
-        public void Update(Cart entity)
+        public async Task Update(Cart entity)
         {
-            _cartRepository.Update(entity);
+            await _cartRepository.Update(entity);
         }
 
-        public void RemoveFromCart(string userId,int productId)
+        public async Task RemoveFromCart(string userId,int productId)
         {
-            var cart = GetCartByUserId(userId);
+            var cart = await GetCartByUserIdAsync(userId);
             if (cart != null)
             {
                 _cartRepository.RemoveFromCart(cart.Id,productId);
@@ -99,12 +98,12 @@ namespace Comm.Business.Concrete
 
         }
 
-        public void ClearCart(int cartId)
+        public async Task ClearCart(int cartId)
         {
-            var cart = _cartRepository.GetById(cartId);
+            var cart = await _cartRepository.GetByIdAsync(cartId);
 
             cart.CartItems.Clear();
-            _cartRepository.Update(cart);
+            await _cartRepository.Update(cart);
         }
     }
 }

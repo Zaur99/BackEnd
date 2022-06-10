@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Comm.Business.Concrete
 {
@@ -16,34 +17,34 @@ namespace Comm.Business.Concrete
             _commentRepository = commentRepository;
             
         }
-        public void Create(Comment entity)
+        public async Task Create(Comment entity)
         {
-            _commentRepository.Create(entity);
+            await _commentRepository.Create(entity);
 
         }
 
-        public void Delete(Comment entity)
+        public async  Task Delete(Comment entity)
         {
-            _commentRepository.Delete(entity);
+           await  _commentRepository.Delete(entity);
         }
 
        
 
-        public IEnumerable<Comment> GetAll(Expression<Func<Comment, bool>> filter = null)
+        public async Task<IEnumerable<Comment>> GetAllAsync(Expression<Func<Comment, bool>> filter = null)
         {
-            return _commentRepository.GetAll(filter);
+            return await _commentRepository.GetAllAsync(filter);
 
         }
 
-        public Comment GetById(int id)
+        public async Task<Comment> GetByIdAsync(int id)
         {
-            return _commentRepository.GetById(id);
+            return await _commentRepository.GetByIdAsync(id);
         }
 
-        public void Update(Comment entity)
+        public async Task Update(Comment entity)
         {
 
-            _commentRepository.Update(entity);
+            await _commentRepository.Update(entity);
         }
 
         public bool FindMatching(Product product, ApplicationUser user)

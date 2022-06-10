@@ -23,12 +23,12 @@ namespace CommAPP.ViewComponents
             _userManager = userManager;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             int count;
             if (User.Identity.IsAuthenticated)
             {
-                count = _cartService.GetCountItems(_userManager.GetUserId((System.Security.Claims.ClaimsPrincipal)User));
+                count =await _cartService.GetCountItemsAsync(_userManager.GetUserId((System.Security.Claims.ClaimsPrincipal)User));
                 if (count > 0)
                 {
                     ViewData["Count"] = count;
@@ -57,6 +57,7 @@ namespace CommAPP.ViewComponents
 
 
             }
+
             return View();
         }
     }

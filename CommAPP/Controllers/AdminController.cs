@@ -45,10 +45,10 @@ namespace CommAPP.Controllers
 
 
         }
-        public IActionResult AdminProducts()
+        public async Task<IActionResult> AdminProducts()
         {
-            var products = _productService.GetAll();
-            var vm = _mapper.Map<List<ProductViewModel>>(products.ToList());
+            var products = await _productService.GetAllAsync();
+            var vm = _mapper.Map<List<ProductViewModel>>(products);
 
             return View(vm);
         }
@@ -77,21 +77,21 @@ namespace CommAPP.Controllers
 
                 };
 
-                _productService.Create(entity);
+                await _productService.Create(entity);
                 return RedirectToAction("AdminProducts");
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult EditProduct(int? id)
+        public async Task<IActionResult> EditProduct(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var entity = _productService.GetByIdWithCategories((int)id);
+            var entity = await _productService.GetByIdWithCategoriesAsync((int)id);
 
             if (entity == null)
             {
@@ -111,45 +111,53 @@ namespace CommAPP.Controllers
                 SelectedCategories = entity.ProductCategories.Select(i => i.Category).ToList()
             };
 
-            ViewBag.Categories = _categoryService.GetAll();
-            return View(model);
+            var vm = new ProductEditViewModel
+            {
+                ProductEditModel = model,
+                 
+            };
+          
+
+            ViewBag.Categories = await _categoryService.GetAllAsync();
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProduct(ProductModel model, int[] categoryIds,IFormFile file)
+        public async Task<IActionResult> EditProduct(ProductEditViewModel model, int[] categoryIds)
         {
             if (ModelState.IsValid)
             {
 
-                var entity = _productService.GetById(model.Id);
+                var entity = _productService.GetByIdAsync(model.ProductEditModel.Id);
 
-                string uniqueFileName = await UploadedFile(file);
-                entity.Name = model.Name;
-                entity.Price = model.Price;
-                entity.Description = model.Description;
-                entity.Url = model.Url;
-                entity.IsHome = model.IsHome;
-                entity.IsApproved = model.IsApproved;
-                entity.ImageUrl = file == null ? model.ImageUrl : uniqueFileName;
+                string uniqueFileName = await UploadedFile(model.File);
+
+                var entityResult = await entity;
+
+                entityResult.Name = model.ProductEditModel.Name;
+                entityResult.Price = model.ProductEditModel.Price;
+                entityResult.Description = model.ProductEditModel.Description;
+                entityResult.Url = model.ProductEditModel.Url;
+                entityResult.IsHome = model.ProductEditModel.IsHome;
+                entityResult.IsApproved = model.ProductEditModel.IsApproved;
+                entityResult.ImageUrl = model.File == null ? model.ProductEditModel.ImageUrl : uniqueFileName;
                
 
-
-
-
-                _productService.Update(entity, categoryIds);
+                await _productService.Update(entityResult, categoryIds);
 
                 return RedirectToAction("AdminProducts");
             }
-            ViewBag.Categories = _categoryService.GetAll();
+
+            ViewBag.Categories = await _categoryService.GetAllAsync();
             return View(model);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
 
-        public IActionResult DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            var entity = _productService.GetById(id);
+            var entity = await _productService.GetByIdAsync(id);
 
             if (entity == null)
             {
@@ -157,16 +165,16 @@ namespace CommAPP.Controllers
 
             }
 
-            _productService.Delete(entity);
+            await _productService.Delete(entity);
 
             return RedirectToAction("AdminProducts");
         }
 
 
-        public IActionResult AdminCategories()
+        public async Task<IActionResult> AdminCategories()
         {
-            var categories = _categoryService.GetAll();
-            var vm = _mapper.Map<IEnumerable<CategoryViewModel>>(categories.ToList());
+            var categories = await _categoryService.GetAllAsync();
+            var vm = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
 
             return View(vm);
         }
@@ -188,9 +196,9 @@ namespace CommAPP.Controllers
             return categoryMenuItem;
         }
         [HttpGet]
-        public IActionResult CreateCategory()
+        public async Task<IActionResult> CreateCategory()
         {
-            var categories = _categoryService.GetAll();
+            var categories =await  _categoryService.GetAllAsync();
 
 
             var categoryItems = new List<NestedCategoriesViewModel>();
@@ -211,7 +219,7 @@ namespace CommAPP.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
         
-        public IActionResult CreateCategory(CategoryModel model)
+        public async Task<IActionResult> CreateCategory(CategoryModel model)
         {
             
             if (ModelState.IsValid)
@@ -223,20 +231,20 @@ namespace CommAPP.Controllers
                     ParentId = model.ParentId
                 };
 
-                _categoryService.Create(entity);
+               await _categoryService.Create(entity);
                 return RedirectToAction("AdminCategories");
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult EditCategory(int? id)
+        public async Task<IActionResult> EditCategory(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var category = _categoryService.GetByIdWithProducts((int)id);
+            var category = await _categoryService.GetByIdAsync((int)id);
 
             if (category == null)
             {
@@ -258,15 +266,15 @@ namespace CommAPP.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
 
-        public IActionResult EditCategory(CategoryModel model)
+        public async Task<IActionResult> EditCategory(CategoryModel model)
         {
             if (ModelState.IsValid)
             {
-                var category = _categoryService.GetByIdWithProducts((int)model.Id);
+                var category = await _categoryService.GetByIdAsync((int)model.Id);
 
                 category.Name = model.Name;
                 category.Url = model.Url;
-                _categoryService.Update(category);
+                await _categoryService.Update(category);
 
                 return RedirectToAction("AdminCategories");
             }
@@ -277,9 +285,9 @@ namespace CommAPP.Controllers
         [ValidateAntiForgeryToken]
         [HttpPost]
 
-        public IActionResult DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
-            var entity = _categoryService.GetById(id);
+            var entity =await  _categoryService.GetByIdAsync(id);
 
             if (entity == null)
             {
@@ -287,7 +295,7 @@ namespace CommAPP.Controllers
 
             }
 
-            _categoryService.Delete(entity);
+            await _categoryService.Delete(entity);
 
             return RedirectToAction("AdminCategories");
         }
@@ -323,6 +331,7 @@ namespace CommAPP.Controllers
 
             return uniqueFileName;
         }
+        
 
         public IActionResult RoleList()
         {

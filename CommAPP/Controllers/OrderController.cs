@@ -1,4 +1,5 @@
-﻿using Comm.Business.Abstract;
+﻿using AutoMapper;
+using Comm.Business.Abstract;
 using Comm.Entities;
 using CommAPP.Models.ViewModels;
 using CommAPP.Models.ViewModels.OrderRelated;
@@ -18,18 +19,23 @@ namespace CommAPP.Controllers
         private IOrderService _orderService;
         private UserManager<ApplicationUser> _userManager;
         private ICartService _cartService;
-        public OrderController(IOrderService orderService, UserManager<ApplicationUser> userManager, ICartService cartService)
+        private IMapper _mapper;
+        public OrderController(IOrderService orderService,
+                               UserManager<ApplicationUser> userManager,
+                               ICartService cartService,
+                               IMapper mapper)
         {
             _orderService = orderService;
             _userManager = userManager;
             _cartService = cartService;
+            _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.Identity.IsAuthenticated)
             {
 
-                var orders = _orderService.GetOrdersByUserId(_userManager.GetUserId(User));
+                var orders =await _orderService.GetOrdersByUserIdAsync(_userManager.GetUserId(User));
 
                 var vm = new OrderListViewModel()
                 {
@@ -49,14 +55,15 @@ namespace CommAPP.Controllers
 
 
 
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout()
         {
 
-            var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+            var cart = await _cartService.GetCartByUserIdAsync(_userManager.GetUserId(User));
 
+            var testVm = _mapper.Map<CartModel>(cart);
             var vm = new CartModel()
             {
-                 
+
                 CartItems = cart.CartItems.Select(i => new CartItemModel()
                 {
                     ImageUrl = i.Product.ImageUrl,
@@ -74,38 +81,27 @@ namespace CommAPP.Controllers
         }
 
         [HttpPost]
-        public  IActionResult CompleteOrder(OrderModel model)
+        public async Task<IActionResult> CompleteOrder(OrderModel model)
         {
             if (ModelState.IsValid)
             {
                 string userId = _userManager.GetUserId(User);
-                var cart = _cartService.GetCartByUserId(userId);
+                var cart =  _cartService.GetCartByUserIdAsync(userId);
 
-                var order = new Order();
-
-                order.FullName = model.FullName;
-                order.Email = model.Email;
-                order.Adress = model.Adress;
-                order.City = model.City;
-                order.OrderedTime = DateTime.Now;
-                order.ExtraDetails = model.ExtraDetails;
-                order.TotalPrice = model.TotalPrice;
-                order.PhoneNumber = model.PhoneNumber;
-                order.OrderStatus = "Pending";
+                var order = _mapper.Map<Order>(model);
                 order.UserId = userId;
+                order.OrderStatus = "Pending";
 
-                _orderService.Create(order);
+                await _orderService.Create(order);
 
                 //Pass Cart to Order, then clear Cart
-                _orderService.PassCartToOrder(order.Id, cart.Id);
-                _cartService.ClearCart(cart.Id);
-
-
-
+                await _orderService.PassCartToOrder(order.Id, cart.Result.Id);
+                await _cartService.ClearCart(cart.Result.Id);
 
                 return RedirectToAction("Index");
 
             }
+
             return View();
         }
     }

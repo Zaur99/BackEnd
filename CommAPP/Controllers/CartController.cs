@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CommAPP.Controllers
 {
@@ -18,8 +19,8 @@ namespace CommAPP.Controllers
         private readonly ICartService _cartService;
         private readonly IMapper _mapper;
 
-        public CartController(IProductService productService, 
-                              UserManager<ApplicationUser> userManager, 
+        public CartController(IProductService productService,
+                              UserManager<ApplicationUser> userManager,
                               ICartService cartService,
                               IMapper mapper)
         {
@@ -29,14 +30,14 @@ namespace CommAPP.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
             if (User.Identity.IsAuthenticated)
             {
-                var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+                var cart = await _cartService.GetCartByUserIdAsync(_userManager.GetUserId(User));
 
-               
+
                 var cartVm = new CartModel()
                 {
                     Id = cart.Id,
@@ -63,11 +64,11 @@ namespace CommAPP.Controllers
 
 
         //Get Total Price dynamically by sending request (Ajax)
-        public IActionResult GetTotalPrice()
+        public async Task<IActionResult> GetTotalPrice()
         {
             if (User.Identity.IsAuthenticated)
             {
-                var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+                var cart = await _cartService.GetCartByUserIdAsync(_userManager.GetUserId(User));
 
                 //load price and quantity in order to calculate total price
                 var model = new CartModel()
@@ -90,17 +91,18 @@ namespace CommAPP.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(int productId)
+        public async Task<IActionResult> AddToCart(int productId)
         {
-            var product = _productService.GetById(productId);
 
             if (User.Identity.IsAuthenticated)
             {
-                _cartService.AddToCart(productId, _userManager.GetUserId(User));
+                await _cartService.AddToCart(productId, _userManager.GetUserId(User));
                 return RedirectToAction("Index");
             }
             else
             {
+                var product = await _productService.GetByIdAsync(productId);
+
                 AddToCartSession(product, productId);
                 return RedirectToAction("Index");
             }
@@ -139,12 +141,14 @@ namespace CommAPP.Controllers
                 }
                 else
                 {
-                    cart.CartItems.Add(new CartItemModel {
-                        Id = product.Id, 
+                    cart.CartItems.Add(new CartItemModel
+                    {
+                        Id = product.Id,
                         ImageUrl = product.ImageUrl,
-                        Name = product.Name, Price = product.Price,
+                        Name = product.Name,
+                        Price = product.Price,
                         Quantity = 1,
-                        ProductId = product.Id, 
+                        ProductId = product.Id,
                         Url = product.Url,
                         Star = product.Comments.Any() ? product.Comments.Average(x => Convert.ToDouble(x.Star)) : 0
                     });
@@ -157,14 +161,14 @@ namespace CommAPP.Controllers
 
 
         //Update value of item quantity in client-side
-        public IActionResult AdjustValue(int id, int value)
+        public async Task<IActionResult> AdjustValue(int id, int value)
         {
             if (User.Identity.IsAuthenticated)
             {
-                var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
+                var cart = await _cartService.GetCartByUserIdAsync(_userManager.GetUserId(User));
                 var item = cart.CartItems.FirstOrDefault(i => i.Id == id);
                 item.Quantity = value;
-                _cartService.Update(cart);
+                await _cartService.Update(cart);
 
 
                 return Json("ok");
@@ -180,12 +184,12 @@ namespace CommAPP.Controllers
 
         }
 
-        public IActionResult CountItems()
+        public async Task<IActionResult> CountItems()
         {
             int count;
             if (User.Identity.IsAuthenticated)
             {
-                count = _cartService.GetCountItems(_userManager.GetUserId(User));
+                count =await _cartService.GetCountItemsAsync(_userManager.GetUserId(User));
             }
             else
             {
@@ -200,14 +204,14 @@ namespace CommAPP.Controllers
         }
 
 
-       
+
 
         [HttpPost]
-        public IActionResult RemoveFromCart(int productId)
+        public async Task<IActionResult> RemoveFromCart(int productId)
         {
             if (User.Identity.IsAuthenticated)
             {
-                _cartService.RemoveFromCart(_userManager.GetUserId(User), productId);
+                await _cartService.RemoveFromCart(_userManager.GetUserId(User), productId);
                 return RedirectToAction("Index");
             }
             else
