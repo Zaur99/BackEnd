@@ -1,4 +1,4 @@
-﻿@model OrderListViewModel
+﻿@model IEnumerable<OrderViewModel>
 
 
 <div class="container">
@@ -15,7 +15,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.OrderListVM)
+                    @foreach (var item in Model)
                     {
                         <tr>
                             <th scope="row">@item.OrderId</th>
